@@ -117,7 +117,7 @@ const GartnerMagicQuadrant = () => {
     addLabel(7.5, 9.5, "Leaders");
     addLabel(2.5, 9.5, "Visionaries");
     addLabel(2.5, 0.5, "Niche Players");
-    addLabel(7.5, 0.5, "Challengers");
+    addLabel(7.5, 0.5, "Underdogs");
 
     // Add points
     svg
