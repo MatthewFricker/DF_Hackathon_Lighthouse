@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import * as d3 from "d3";
-import data from "../assets/MockMatrixData.json"
+import data from "../assets/MockMatrixData.json";
 import "./GartnerMagicQuadrant.css";
 
 const GartnerMagicQuadrant = () => {
@@ -18,7 +18,6 @@ const GartnerMagicQuadrant = () => {
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
     const xScale = d3.scaleLinear().domain([0, 10]).range([0, width]);
-
     const yScale = d3.scaleLinear().domain([0, 10]).range([height, 0]);
 
     // Add background rectangles for quadrants
@@ -98,6 +97,7 @@ const GartnerMagicQuadrant = () => {
         .attr("text-anchor", "middle")
         .attr("font-size", "16px")
         .attr("fill", "#333")
+        .attr("class", "quadrant-label")
         .text(text);
 
       const bbox = textElement.node().getBBox();
@@ -110,7 +110,8 @@ const GartnerMagicQuadrant = () => {
         .attr("fill", "white")
         .attr("stroke", "#ccc")
         .attr("rx", 3)
-        .attr("ry", 3);
+        .attr("ry", 3)
+        .lower();
     };
 
     addLabel(7.5, 9.5, "Leaders");
@@ -128,11 +129,19 @@ const GartnerMagicQuadrant = () => {
       .attr("cy", (d) => yScale(d.perceivedBusinessValue))
       .attr("r", 5)
       .attr("fill", "blue")
-      .on("mouseover", function () {
-        d3.select(this).attr("fill", "orange");
+      .on("mouseover", function (event, d) {
+        d3.select(this).transition().attr("r", 7).attr("fill", "orange");
+        tooltip.transition().style("opacity", 1);
+        tooltip
+          .html(
+            `Name: ${d.name}<br>Business Readiness: ${d.businessReadiness}<br>Perceived Business Value: ${d.perceivedBusinessValue}`
+          )
+          .style("left", event.pageX + 5 + "px")
+          .style("top", event.pageY - 28 + "px");
       })
       .on("mouseout", function () {
-        d3.select(this).attr("fill", "blue");
+        d3.select(this).transition().attr("r", 5).attr("fill", "blue");
+        tooltip.transition().style("opacity", 0);
       })
       .on("click", function (event, d) {
         window.location.href = `/${d.name}`;
@@ -148,6 +157,13 @@ const GartnerMagicQuadrant = () => {
       .attr("x", (d) => xScale(d.businessReadiness) + 5)
       .attr("y", (d) => yScale(d.perceivedBusinessValue) - 5)
       .text((d) => d.name);
+
+    // Add tooltip
+    const tooltip = d3
+      .select("body")
+      .append("div")
+      .attr("class", "tooltip")
+      .style("opacity", 0);
   }, []);
 
   return (
