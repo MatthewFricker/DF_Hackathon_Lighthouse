@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "AlphaLLM",
+    "businessReadiness": 7.8,
+    "perceivedBusinessValue": 8.2
+  },
+  {
+    "id": 2,
+    "name": "BetaLLM",
+    "businessReadiness": 6.4,
+    "perceivedBusinessValue": 7.9
+  },
+  {
+    "id": 3,
+    "name": "GammaLLM",
+    "businessReadiness": 8.5,
+    "perceivedBusinessValue": 8.7
+  },
+  {
+    "id": 4,
+    "name": "DeltaLLM",
+    "businessReadiness": 5.9,
+    "perceivedBusinessValue": 6.8
+  },
+  {
+    "id": 5,
+    "name": "EpsilonLLM",
+    "businessReadiness": 9.1,
+    "perceivedBusinessValue": 9.0
+  },
+  {
+    "id": 6,
+    "name": "ZetaLLM",
+    "businessReadiness": 4.3,
+    "perceivedBusinessValue": 5.4
+  },
+  {
+    "id": 7,
+    "name": "EtaLLM",
+    "businessReadiness": 6.8,
+    "perceivedBusinessValue": 7.2
+  },
+  {
+    "id": 8,
+    "name": "ThetaLLM",
+    "businessReadiness": 7.2,
+    "perceivedBusinessValue": 6.5
+  }
+]
