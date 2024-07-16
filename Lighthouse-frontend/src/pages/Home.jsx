@@ -1,6 +1,10 @@
+import GartnerMagicQuadrant from "../components/GartnerMagicQuadrant"
+
 const Home = () => {
   return (
-    <div>Home</div>
+    <div>Home
+      <GartnerMagicQuadrant />
+    </div>
   )
 }
 
