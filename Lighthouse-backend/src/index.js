@@ -5,7 +5,7 @@ import Server from "./server/Server.js";
 import Router from "./routes/Router.js";
 
 Config.load();
-const port = 4000; //for deployment on render
+const port =  process.env.PORT || 4000; //for deployment on render
 const {PORT, HOST, DB_URI } = process.env;
 
 const router = new Router();
