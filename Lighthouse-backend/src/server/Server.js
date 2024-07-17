@@ -23,20 +23,20 @@ export default class Server {
   start() {
     this.#app.use(
       cors({
-        origin: ["http://localhost:5173", "https://df-lighthouse.onrender.com"],
+        origin: ["https://df-lighthouse.onrender.com","http://localhost:5173"],
       })
     );
 
     this.#app.use(express.json());
 
-    this.#app.use((req, res, next) => {
-      res.header("Access-Control-Allow-Origin", "*");
-      res.header(
-        "Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept"
-      );
-      next();
-    });
+    // this.#app.use((req, res, next) => {
+    //   res.header("Access-Control-Allow-Origin", "*");
+    //   res.header(
+    //     "Access-Control-Allow-Headers",
+    //     "Origin, X-Requested-With, Content-Type, Accept"
+    //   );
+    //   next();
+    // });
 
     this.#router.getRouter().forEach((router) => {
       this.#app.use(router.getRouteStartPoint(), router.getRouter());
