@@ -11,7 +11,7 @@ export default class Server {
   constructor(port, host, router) {
     this.#app = express();
     this.#port = port || 4000;
-    this.#host = host;
+    this.#host = host || "0.0.0.0";
     this.#server = null;
     this.#router = router;
   }
@@ -33,6 +33,9 @@ export default class Server {
 
     this.#router.getRouter().forEach((router) => {
       this.#app.use(router.getRouteStartPoint(), router.getRouter());
+    });
+    this.app.listen(this.port, this.host, () => {
+      console.log(`Server is listening on http://${this.host}:${this.port}`);
     });
   }
 
