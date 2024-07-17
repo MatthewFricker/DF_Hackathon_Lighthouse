@@ -10,7 +10,7 @@ export default class Server {
 
   constructor(port, host, router) {
     this.#app = express();
-    this.#port = port;
+    this.#port = port || 4000;
     this.#host = host;
     this.#server = null;
     this.#router = router;
