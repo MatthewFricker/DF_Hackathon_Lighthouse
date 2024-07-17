@@ -3,10 +3,10 @@ import jwt from "jsonwebtoken";
 import User from "../models/User.model.js";
 
 export default class AuthService {
-  register = async ({ username, password }) => {
+  register = async ({ email, username, password }) => {
     try {
       const hashedPassword = await bcrypt.hash(password, 10);
-      const user = new User({ username, password: hashedPassword });
+      const user = new User({ email, username, password: hashedPassword });
       await user.save();
       const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
       return { user, accessToken };

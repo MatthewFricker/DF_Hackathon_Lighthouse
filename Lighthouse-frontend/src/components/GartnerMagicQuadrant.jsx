@@ -4,7 +4,7 @@ import data from "../assets/MockMatrixData.json";
 import "./GartnerMagicQuadrant.css";
 
 const GartnerMagicQuadrant = () => {
-  useEffect(() => {
+  const CreateGraph = () => {
     const width = 600;
     const height = 600;
     const margin = { top: 50, right: 50, bottom: 50, left: 50 };
@@ -164,6 +164,10 @@ const GartnerMagicQuadrant = () => {
       .append("div")
       .attr("class", "tooltip")
       .style("opacity", 0);
+  }
+
+  useEffect(() => {
+    CreateGraph();
   }, []);
 
   return (
