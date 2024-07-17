@@ -8,9 +8,9 @@ export default class AuthController {
   }
 
   register = async (req, res) => {
-    const { username, password } = req.body;
+    const {email, username, password } = req.body;
     try {
-      const user = await this.#authService.register({ username, password });
+      const user = await this.#authService.register({email, username, password });
       res
         .header("X-Access-Token", user.accessToken)
         .status(200)
