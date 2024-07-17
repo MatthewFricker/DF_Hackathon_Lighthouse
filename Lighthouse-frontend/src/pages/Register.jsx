@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { register } from "../services/auth.service";
 import { Container, Card, Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -7,7 +9,23 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const navigate = useNavigate();
   const isFormFilled = email && username && password && confirmPassword;
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (password !== confirmPassword) {
+      console.error("Passwords do not match!");
+      return;
+    }
+    try {
+      await register(email, username, password);
+      alert("Registration successful!");
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <Container
@@ -16,7 +34,7 @@ const Register = () => {
     >
       <Card style={{ width: "400px" }} className="mx-auto p-4">
         <Card.Body>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
               <Form.Control

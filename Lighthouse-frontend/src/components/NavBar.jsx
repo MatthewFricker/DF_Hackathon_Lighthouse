@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
@@ -8,6 +8,21 @@ import Col from "react-bootstrap/Col";
 
 function NavBar() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.clear();
+    setIsLoggedIn(false);
+  };
 
   return (
     <Navbar className="bg-body-tertiary justify-content-between p-3">
@@ -16,8 +31,15 @@ function NavBar() {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
           <Nav.Link href="/">Home</Nav.Link>
-          <Nav.Link href="/login">Login</Nav.Link>
           <Nav.Link href="/catalog">Catalog</Nav.Link>
+
+          {isLoggedIn ? (
+            <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+          ) : (
+            <>
+              <Nav.Link href="/login">Login</Nav.Link>
+            </>
+          )}
         </Nav>
       </Navbar.Collapse>
 
