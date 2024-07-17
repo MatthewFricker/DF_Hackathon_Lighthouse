@@ -34,9 +34,6 @@ export default class Server {
     this.#router.getRouter().forEach((router) => {
       this.#app.use(router.getRouteStartPoint(), router.getRouter());
     });
-    this.app.listen(this.port, this.host, () => {
-      console.log(`Server is listening on http://${this.host}:${this.port}`);
-    });
   }
 
   close() {
