@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-
 import NavBarMD from "./components/NavBar"; 
 import Home from "./pages/Home";
 import Catalog from "./pages/Catalog";

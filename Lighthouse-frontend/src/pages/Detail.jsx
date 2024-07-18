@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 
-import data from "../assets/LLMData.json";
+import data from "../assets/LLMData2.json";
 
 const Detail = () => {
   const { name } = useParams();

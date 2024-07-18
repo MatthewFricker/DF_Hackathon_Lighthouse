@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useNavigate } from "react-router-dom";
 
-import data from "../assets/LLMData.json";
+import data from "../assets/LLMData2.json";
 
 function NavBar() {
   const navigate = useNavigate();
@@ -30,13 +30,15 @@ function NavBar() {
 
       const uniqueMatches = new Map();
       data.forEach((item) => {
-        if (
-          item.name.toLowerCase().includes(lowerCaseQuery) ||
-          item.organization.toLowerCase().includes(lowerCaseQuery)
-        ) {
-          if (!uniqueMatches.has(item.id)) {
-            uniqueMatches.set(item.id, item);
-          }
+        let matchSource = null;
+        if (item.name.toLowerCase().includes(lowerCaseQuery)) {
+          matchSource = "name";
+        } else if (item.organization.toLowerCase().includes(lowerCaseQuery)) {
+          matchSource = "organization";
+        }
+
+        if (matchSource && !uniqueMatches.has(item.id)) {
+          uniqueMatches.set(item.id, { ...item, matchSource });
         }
       });
 
@@ -51,8 +53,8 @@ function NavBar() {
     setIsLoggedIn(false);
   };
 
-  const handleSelect = (modelName) => {
-    navigate(`/model/${modelName}`);
+  const handleSelect = (model) => {
+    navigate(`/model/${model.name}`);
   };
 
   return (
@@ -104,10 +106,12 @@ function NavBar() {
                   <Dropdown.Menu>
                     {filteredData.map((item) => (
                       <Dropdown.Item
-                        key={item.name}
-                        onClick={() => handleSelect(item.name)}
+                        key={item.id}
+                        onClick={() => handleSelect(item)}
                       >
-                        {item.name}
+                        {item.matchSource === "organization"
+                          ? item.organization
+                          : item.name}
                       </Dropdown.Item>
                     ))}
                   </Dropdown.Menu>
