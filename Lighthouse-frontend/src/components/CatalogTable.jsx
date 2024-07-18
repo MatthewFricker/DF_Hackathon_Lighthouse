@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 import data from "../assets/LLMData2.json";
 
-
 const CatalogTable = () => {
   const navigate = useNavigate();
   const [sortConfig, setSortConfig] = useState({
@@ -13,13 +12,34 @@ const CatalogTable = () => {
   });
 
   const sortedData = [...data].sort((a, b) => {
-    if (a[sortConfig.key] < b[sortConfig.key]) {
-      return sortConfig.direction === "ascending" ? -1 : 1;
+    if (sortConfig.key === "created_date") {
+      const dateA = new Date(
+        parseInt(a.created_date.split("/")[2]), // year
+        parseInt(a.created_date.split("/")[1]) - 1, // month (zero-indexed)
+        parseInt(a.created_date.split("/")[0]) // day
+      );
+      const dateB = new Date(
+        parseInt(b.created_date.split("/")[2]), // year
+        parseInt(b.created_date.split("/")[1]) - 1, // month (zero-indexed)
+        parseInt(b.created_date.split("/")[0]) // day
+      );
+
+      if (dateA < dateB) {
+        return sortConfig.direction === "ascending" ? -1 : 1;
+      }
+      if (dateA > dateB) {
+        return sortConfig.direction === "ascending" ? 1 : -1;
+      }
+      return 0;
+    } else {
+      if (a[sortConfig.key] < b[sortConfig.key]) {
+        return sortConfig.direction === "ascending" ? -1 : 1;
+      }
+      if (a[sortConfig.key] > b[sortConfig.key]) {
+        return sortConfig.direction === "ascending" ? 1 : -1;
+      }
+      return 0;
     }
-    if (a[sortConfig.key] > b[sortConfig.key]) {
-      return sortConfig.direction === "ascending" ? 1 : -1;
-    }
-    return 0;
   });
 
   const requestSort = (key) => {
@@ -38,7 +58,7 @@ const CatalogTable = () => {
   };
 
   const handleRowClick = (itemName) => {
-    navigate(`/model/${itemName}`)
+    navigate(`/model/${itemName}`);
   };
 
   return (
