@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import * as d3 from "d3";
 import "./GartnerMagicQuadrant.css";
 
-import data from "../assets/MockMatrixData.json";
+import data from "../assets/LLMData2.json";
 
 
 const GartnerMagicQuadrant = () => {
@@ -127,8 +127,8 @@ const GartnerMagicQuadrant = () => {
       .data(data)
       .enter()
       .append("circle")
-      .attr("cx", (d) => xScale(d.businessReadiness))
-      .attr("cy", (d) => yScale(d.perceivedBusinessValue))
+      .attr("cx", (d) => xScale(d.business_readiness))
+      .attr("cy", (d) => yScale(d.perceived_business_value))
       .attr("r", 5)
       .attr("fill", "blue")
       .on("mouseover", function (event, d) {
@@ -136,7 +136,7 @@ const GartnerMagicQuadrant = () => {
         tooltip.transition().style("opacity", 1);
         tooltip
           .html(
-            `Name: ${d.name}<br>Business Readiness: ${d.businessReadiness}<br>Perceived Business Value: ${d.perceivedBusinessValue}`
+            `Name: ${d.name}<br>Business Readiness: ${d.business_readiness}<br>Perceived Business Value: ${d.perceived_business_value}`
           )
           .style("left", event.pageX + 5 + "px")
           .style("top", event.pageY - 28 + "px");
@@ -156,8 +156,8 @@ const GartnerMagicQuadrant = () => {
       .enter()
       .append("text")
       .attr("class", "label")
-      .attr("x", (d) => xScale(d.businessReadiness) + 5)
-      .attr("y", (d) => yScale(d.perceivedBusinessValue) - 5)
+      .attr("x", (d) => xScale(d.business_readiness) + 5)
+      .attr("y", (d) => yScale(d.perceived_business_value) - 5)
       .text((d) => d.name);
 
     // Add tooltip

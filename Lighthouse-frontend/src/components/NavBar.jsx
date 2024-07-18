@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useNavigate } from "react-router-dom";
 
-import data from "../assets/LLMData.json";
+import data from "../assets/LLMData2.json";
 
 function NavBar() {
   const navigate = useNavigate();

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Table } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 
-import data from "../assets/LLMData.json";
+import data from "../assets/LLMData2.json";
 
 
 const CatalogTable = () => {
