@@ -59,6 +59,16 @@ const GartnerMagicQuadrant = () => {
       .attr("fill", "lightcoral")
       .attr("opacity", 0.3);
 
+    // // Adjust xScale domain
+    // let xDomain = xScale.domain();
+    // xDomain[0] = xDomain[0] + 3; 
+    // xScale.domain(xDomain);
+
+    // // Adjust yScale domain
+    // let yDomain = yScale.domain();
+    // yDomain[0] = yDomain[0] + 3; 
+    // yScale.domain(yDomain);
+
     // Add X and Y axes
     svg
       .append("g")
@@ -131,6 +141,7 @@ const GartnerMagicQuadrant = () => {
       .attr("cy", (d) => yScale(d.perceived_business_value))
       .attr("r", 5)
       .attr("fill", "blue")
+      .style("cursor", "pointer")
       .on("mouseover", function (event, d) {
         d3.select(this).transition().attr("r", 7).attr("fill", "orange");
         tooltip.transition().style("opacity", 1);
