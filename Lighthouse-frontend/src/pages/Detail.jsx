@@ -71,9 +71,9 @@ const Detail = () => {
                 {renderField("Monthly Active Users", llm.monthly_active_users)}
                 {renderField("User Distribution", llm.user_distribution)}
                 {renderField("Failures", llm.failures)}
-                <Link to="/">
+                <Link to="/catalog">
                   <Button variant="primary" className="mt-3">
-                    Back to Table
+                    Back to Catalog
                   </Button>
                 </Link>
               </Card.Body>
