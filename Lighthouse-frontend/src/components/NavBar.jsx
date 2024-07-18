@@ -5,8 +5,10 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { useNavigate } from "react-router-dom";
 
 function NavBar() {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -22,6 +24,11 @@ function NavBar() {
   const handleLogout = () => {
     localStorage.clear();
     setIsLoggedIn(false);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate(`/model/${searchQuery}`);
   };
 
   return (
@@ -43,7 +50,9 @@ function NavBar() {
           <Nav.Link href="/catalog">Catalog</Nav.Link>
 
           {isLoggedIn ? (
-            <Nav.Link onClick={handleLogout} href="/">Logout</Nav.Link>
+            <Nav.Link onClick={handleLogout} href="/">
+              Logout
+            </Nav.Link>
           ) : (
             <>
               <Nav.Link href="/login">Login</Nav.Link>
@@ -52,7 +61,7 @@ function NavBar() {
         </Nav>
       </Navbar.Collapse>
 
-      <Form className="inline">
+      <Form className="inline" onSubmit={handleSubmit}>
         <Row>
           <Col xs="auto">
             <Form.Control
