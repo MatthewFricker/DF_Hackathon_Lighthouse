@@ -146,7 +146,7 @@ const GartnerMagicQuadrant = () => {
         tooltip.transition().style("opacity", 0);
       })
       .on("click", function (event, d) {
-        window.location.href = `/${d.name}`;
+        window.location.href = `/model/${d.name}`;
       });
 
     // Add labels
