@@ -3,26 +3,35 @@ import { Container, Row, Col, Card, Button } from "react-bootstrap";
 
 import data from "../assets/LLMData.json";
 
-  const Detail = () => {
-    const { name } = useParams();
-    const llm = data.find(item => item.name === name);
+const Detail = () => {
+  const { name } = useParams();
+  const llm = data.find((item) => item.name === name);
 
-    if (!llm) {
-      return <div>Model not found</div>;
-    }
+  if (!llm) {
+    return <div>Model not found</div>;
+  }
 
-    const renderField = (label, value) => {
-      return value ? (
-        <Card.Text style={{ textAlign: 'left' }}>
-          <strong>{label}: </strong>{value}
-        </Card.Text>
-      ) : null;
-    };
+  const renderField = (label, value) => {
+    return value ? (
+      <Card.Text style={{ textAlign: "left" }}>
+        <strong>{label}: </strong>
+        {value}
+      </Card.Text>
+    ) : null;
+  };
 
-    return (
+  return (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "80vh",
+      }}
+    >
       <Container>
         <Row className="mt-5 justify-content-center">
-          <Col md={{ span: 8, offset: 2 }}>
+          <Col>
             <Card>
               <Card.Header>{llm.name}</Card.Header>
               <Card.Body>
@@ -72,6 +81,7 @@ import data from "../assets/LLMData.json";
           </Col>
         </Row>
       </Container>
-    );
-  };
+    </div>
+  );
+};
 export default Detail;
