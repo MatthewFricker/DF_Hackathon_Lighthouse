@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 import * as d3 from "d3";
-import data from "../assets/MockMatrixData.json";
 import "./GartnerMagicQuadrant.css";
+
+import data from "../assets/MockMatrixData.json";
+
 
 const GartnerMagicQuadrant = () => {
   const CreateGraph = () => {
