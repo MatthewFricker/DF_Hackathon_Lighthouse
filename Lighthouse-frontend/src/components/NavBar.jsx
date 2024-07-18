@@ -87,7 +87,7 @@ function NavBar() {
         </Nav>
       </Navbar.Collapse>
 
-      <Form inline onSubmit={(e) => e.preventDefault()}>
+      <Form onSubmit={(e) => e.preventDefault()}>
         <Row>
           <Col>
             <div className="d-flex justify-content-end">
