@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Table } from "react-bootstrap";
-import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 import data from "../assets/LLMData2.json";
 
 
 const CatalogTable = () => {
+  const navigate = useNavigate();
   const [sortConfig, setSortConfig] = useState({
     key: "name",
     direction: "ascending",
@@ -36,6 +37,10 @@ const CatalogTable = () => {
     return sortConfig.key === name ? sortConfig.direction : undefined;
   };
 
+  const handleRowClick = (itemName) => {
+    navigate(`/model/${itemName}`)
+  };
+
   return (
     <Table striped bordered hover>
       <thead>
@@ -47,10 +52,7 @@ const CatalogTable = () => {
             Organization{" "}
             {getClassNamesFor("organization") === "ascending" ? "▲" : "▼"}
           </th>
-          <th onClick={() => requestSort("description")}>
-            Description{" "}
-            {getClassNamesFor("description") === "ascending" ? "▲" : "▼"}
-          </th>
+          <th>Description </th>
           <th onClick={() => requestSort("created_date")}>
             Created Date{" "}
             {getClassNamesFor("created_date") === "ascending" ? "▲" : "▼"}
@@ -65,8 +67,12 @@ const CatalogTable = () => {
       </thead>
       <tbody>
         {sortedData.map((item, index) => (
-          <tr key={index}>
-            <td><Link to={`/model/${item.name}`}>{item.name}</Link></td>
+          <tr
+            key={index}
+            onClick={() => handleRowClick(item.name)}
+            style={{ cursor: "pointer" }}
+          >
+            <td>{item.name}</td>
             <td>{item.organization}</td>
             <td>{item.description}</td>
             <td>{item.created_date}</td>
