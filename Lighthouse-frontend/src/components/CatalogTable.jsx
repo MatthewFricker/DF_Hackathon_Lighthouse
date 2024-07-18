@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Table } from "react-bootstrap";
+import { Link } from 'react-router-dom';
 
 import data from "../assets/LLMData.json";
 
@@ -65,7 +66,7 @@ const CatalogTable = () => {
       <tbody>
         {sortedData.map((item, index) => (
           <tr key={index}>
-            <td>{item.name}</td>
+            <td><Link to={`/model/${item.name}`}>{item.name}</Link></td>
             <td>{item.organization}</td>
             <td>{item.description}</td>
             <td>{item.created_date}</td>
