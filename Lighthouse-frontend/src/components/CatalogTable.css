@@ -1,0 +1,28 @@
+.red-cell {
+  background-color: rgb(243, 128, 128) !important;
+}
+
+.yellow-row td {
+  background-color: rgb(253, 255, 146) !important
+}
+
+.red-row td:first-child {
+  background-color: rgb(236, 118, 118);
+}
+
+.white-row td:first-child {
+
+  background-color: white;
+}
+
+.left-column {
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+}
+
+.left-header {
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+  border-top: 2px solid black !important; 
+}
+

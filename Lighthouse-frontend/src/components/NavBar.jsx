@@ -59,14 +59,7 @@ function NavBar() {
 
   return (
     <Navbar className="bg-body-tertiary justify-content-between p-3">
-      <Navbar.Brand>
-        {/* <img
-          src="/icons8-lighthouse-96.png"
-          width="30"
-          height="30"
-          className="d-inline-block align-top"
-          alt="Lighthouse logo"
-        /> */}
+      <Navbar.Brand >
         Lighthouse
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
