@@ -48,7 +48,7 @@ const Home = () => {
                 </li>
                 <li>
                   <strong>Performance</strong>: The precision and correctness
-                  (helpfulness) of the LLM's responses as well as performance on
+                  (helpfulness) of the LLM&rsquo;s responses as well as performance on
                   industry-standard benchmarks
                 </li>
               </ul>

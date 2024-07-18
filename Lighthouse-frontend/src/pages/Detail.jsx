@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, Table } from "react-bootstrap";
 
 import data from "../assets/LLMData2.json";
 
@@ -71,7 +71,48 @@ const Detail = () => {
                 {renderField("Monthly Active Users", llm.monthly_active_users)}
                 {renderField("User Distribution", llm.user_distribution)}
                 {renderField("Failures", llm.failures)}
-                
+                {renderField("Lawsuits", llm.lawsuits)}
+                {renderField("Lawsuit Information", llm.lawsuit_inf)}
+                <div className="d-flex justify-content-center">
+                  <Table size="sm" bordered striped="columns">
+                    <thead>
+                      <tr>
+                        <th style={{ width: "50%" }}>
+                          Business Readiness:{" "}
+                          {llm.business_readiness.toFixed(2)}
+                        </th>
+                        <th style={{ width: "50%" }}>
+                          Perceived Business Value:{" "}
+                          {llm.perceived_business_value.toFixed(2)}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style={{ width: "50%" }}>
+                          Benchmarks: {llm.benchmarks}
+                        </td>
+                        <td style={{ width: "50%" }}>
+                          Popularity: {llm.popularity}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style={{ width: "50%" }}>Risk: {llm.risk}</td>
+                        <td style={{ width: "50%" }}>
+                          Success Stories: {llm.success_stories}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style={{ width: "50%" }}>
+                          Credibility: {llm.credibility}
+                        </td>
+                        <td style={{ width: "50%" }}>
+                          Capabilities: {llm.capabilities}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </Table>
+                </div>
                 <Link to="/catalog">
                   <Button variant="primary" className="mt-3">
                     Back to Catalog
