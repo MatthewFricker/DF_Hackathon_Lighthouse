@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import * as d3 from "d3";
 import "./GartnerMagicQuadrant.css";
 
-import data from "../assets/LLMData2.json";
+import data from "../assets/LLMData4.json";
 
 
 const GartnerMagicQuadrant = () => {
@@ -127,9 +127,9 @@ const GartnerMagicQuadrant = () => {
     };
 
     addLabel(7.5, 9.5, "Leaders");
-    addLabel(2.5, 9.5, "Visionaries");
+    addLabel(2.5, 9.5, "Competitors");
     addLabel(2.5, 0.5, "Niche Players");
-    addLabel(7.5, 0.5, "Underdogs");
+    addLabel(7.5, 0.5, "Emerging Opportunities");
 
     // Add points
     svg
