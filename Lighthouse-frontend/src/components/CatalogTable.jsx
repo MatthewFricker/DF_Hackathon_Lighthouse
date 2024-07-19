@@ -1,17 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { getModels } from "../services/LLM.service.js";
 
-import data from "../assets/LLMData4.json";
+// import data from "../assets/LLMData4.json";
 
 const CatalogTable = () => {
-
-
-  const navigate = useNavigate();
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [sortConfig, setSortConfig] = useState({
     key: "name",
     direction: "ascending",
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getModels();
+        setData(response);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const navigate = useNavigate();
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!data) {
+    return <div>No data available</div>;
+  }
 
   const sortedData = [...data].sort((a, b) => {
     if (sortConfig.key === "created_date") {
@@ -62,7 +86,6 @@ const CatalogTable = () => {
   const handleRowClick = (itemName) => {
     navigate(`/model/${itemName}`);
   };
-
 
   return (
     <Table striped bordered hover>

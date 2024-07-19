@@ -1,10 +1,38 @@
 import { useParams, Link } from "react-router-dom";
 import { Container, Row, Col, Card, Button, Table } from "react-bootstrap";
+import { useState, useEffect } from "react";
 
-import data from "../assets/LLMData4.json";
+import { getModels } from "../services/LLM.service.js";
+
+// import data from "../assets/LLMData4.json";
 
 const Detail = () => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
   const { name } = useParams();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getModels();
+        setData(response);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!data) {
+    return <div>No data available</div>;
+  }
+
   const llm = data.find((item) => item.name === name);
 
   if (!llm) {
