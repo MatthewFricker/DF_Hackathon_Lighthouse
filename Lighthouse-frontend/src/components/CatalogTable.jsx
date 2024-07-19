@@ -2,9 +2,11 @@ import { useState } from "react";
 import { Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-import data from "../assets/LLMData2.json";
+import data from "../assets/LLMData4.json";
 
 const CatalogTable = () => {
+
+
   const navigate = useNavigate();
   const [sortConfig, setSortConfig] = useState({
     key: "name",
@@ -60,6 +62,7 @@ const CatalogTable = () => {
   const handleRowClick = (itemName) => {
     navigate(`/model/${itemName}`);
   };
+
 
   return (
     <Table striped bordered hover>

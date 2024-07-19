@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { Container, Row, Col, Card, Button, Table } from "react-bootstrap";
 
-import data from "../assets/LLMData2.json";
+import data from "../assets/LLMData4.json";
 
 const Detail = () => {
   const { name } = useParams();
@@ -12,7 +12,7 @@ const Detail = () => {
   }
 
   const renderField = (label, value) => {
-    return value ? (
+    return value && value !== "unknown" ? (
       <Card.Text style={{ textAlign: "left" }}>
         <strong>{label}: </strong>
         {value}
@@ -36,6 +36,46 @@ const Detail = () => {
               <Card.Header>{llm.name}</Card.Header>
               <Card.Body>
                 <Card.Title>{llm.organization}</Card.Title>
+                <div className="d-flex justify-content-center">
+                  <Table size="sm" bordered striped="columns">
+                    <thead>
+                      <tr>
+                        <th style={{ width: "50%" }}>
+                          Business Readiness:{" "}
+                          {llm.business_readiness.toFixed(2)}
+                        </th>
+                        <th style={{ width: "50%" }}>
+                          Perceived Business Value:{" "}
+                          {llm.perceived_business_value.toFixed(2)}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style={{ width: "50%" }}>
+                          Performance: {llm.performance}
+                        </td>
+                        <td style={{ width: "50%" }}>
+                          Popularity: {llm.popularity}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style={{ width: "50%" }}>Risk: {llm.risk}</td>
+                        <td style={{ width: "50%" }}>
+                          Known Successes: {llm.known_successes}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style={{ width: "50%" }}>
+                          Org Credibility: {llm.org_credibility}
+                        </td>
+                        <td style={{ width: "50%" }}>
+                          Capabilities: {llm.capabilities}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </Table>
+                </div>
                 {renderField("Description", llm.description)}
                 {renderField("Created Date", llm.created_date)}
                 {renderField(
@@ -65,54 +105,12 @@ const Detail = () => {
                 {renderField("Training Emissions", llm.training_emissions)}
                 {renderField("Training Time", llm.training_time)}
                 {renderField("Training Hardware", llm.training_hardware)}
-                {renderField("Adaptation", llm.adaptation)}
-                {renderField("Output Space", llm.output_space)}
-                {renderField("Terms of Service", llm.terms_of_service)}
                 {renderField("Monthly Active Users", llm.monthly_active_users)}
                 {renderField("User Distribution", llm.user_distribution)}
                 {renderField("Failures", llm.failures)}
                 {renderField("Lawsuits", llm.lawsuits)}
                 {renderField("Lawsuit Information", llm.lawsuit_inf)}
-                <div className="d-flex justify-content-center">
-                  <Table size="sm" bordered striped="columns">
-                    <thead>
-                      <tr>
-                        <th style={{ width: "50%" }}>
-                          Business Readiness:{" "}
-                          {llm.business_readiness.toFixed(2)}
-                        </th>
-                        <th style={{ width: "50%" }}>
-                          Perceived Business Value:{" "}
-                          {llm.perceived_business_value.toFixed(2)}
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td style={{ width: "50%" }}>
-                          Benchmarks: {llm.benchmarks}
-                        </td>
-                        <td style={{ width: "50%" }}>
-                          Popularity: {llm.popularity}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style={{ width: "50%" }}>Risk: {llm.risk}</td>
-                        <td style={{ width: "50%" }}>
-                          Success Stories: {llm.success_stories}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style={{ width: "50%" }}>
-                          Credibility: {llm.credibility}
-                        </td>
-                        <td style={{ width: "50%" }}>
-                          Capabilities: {llm.capabilities}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </Table>
-                </div>
+
                 <Link to="/catalog">
                   <Button variant="primary" className="mt-3">
                     Back to Catalog
@@ -126,4 +124,5 @@ const Detail = () => {
     </div>
   );
 };
+
 export default Detail;
