@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Card, Container, Row, Col } from "react-bootstrap";
 
 import { createFeedback } from "../services/feedback.service.js";
 
@@ -18,7 +18,7 @@ const LeaveFeedback = () => {
       description,
       userId,
     };
-    console.log(feedback)
+    console.log(feedback);
     try {
       await createFeedback(feedback);
       alert("Feedback submitted successfully!");
@@ -26,7 +26,7 @@ const LeaveFeedback = () => {
       setDescription("");
       navigate("/");
     } catch (error) {
-      console.error( error);
+      console.error(error);
     }
   };
 
@@ -44,27 +44,52 @@ const LeaveFeedback = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="formRating">
-        <Form.Label>Rating</Form.Label>
-        <div>{renderStars()}</div>
-      </Form.Group>
+    <Container className="mt-5">
+      <Row className="justify-content-md-center">
+        <Col md={6}>
+          <Card>
+            <Card.Header as="h3">Leave Feedback</Card.Header>
+            <Card.Body>
+              <Form onSubmit={handleSubmit}>
+                <Form.Group controlId="formRating" className="mb-3">
+                  <Row>
+                    <Col md={4} className="d-flex align-items-center">
+                      <Form.Label className="fw-bold mb-0">Rating</Form.Label>
+                    </Col>
+                    <Col md={8}>
+                      <div>{renderStars()}</div>
+                    </Col>
+                  </Row>
+                </Form.Group>
 
-      <Form.Group controlId="formDescription">
-        <Form.Label>Description</Form.Label>
-        <Form.Control
-          as="textarea"
-          rows={3}
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          required
-        />
-      </Form.Group>
+                <Form.Group controlId="formDescription" className="mb-3">
+                  <Row>
+                    <Col md={4} className="d-flex align-items-center">
+                      <Form.Label className="fw-bold mb-0">
+                        Description
+                      </Form.Label>
+                    </Col>
+                    <Col md={8}>
+                      <Form.Control
+                        as="textarea"
+                        rows={3}
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        required
+                      />
+                    </Col>
+                  </Row>
+                </Form.Group>
 
-      <Button variant="primary" type="submit">
-        Submit Feedback
-      </Button>
-    </Form>
+                <Button variant="primary" type="submit" className="mt-3">
+                  Submit Feedback
+                </Button>
+              </Form>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
