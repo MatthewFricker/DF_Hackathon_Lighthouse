@@ -6,6 +6,7 @@ import { getModels } from "../services/LLM.service.js";
 const GartnerMagicQuadrant = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [valueType, setValueType] = useState("general");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,10 +24,13 @@ const GartnerMagicQuadrant = () => {
 
   useEffect(() => {
     if (data) {
-      console.log(data);
-      CreateGraph(data);
+      CreateGraph(data, valueType);
     }
-  }, [data]);
+  }, [data, valueType]);
+
+  const handleValueTypeChange = (event) => {
+    setValueType(event.target.value);
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -39,12 +43,23 @@ const GartnerMagicQuadrant = () => {
   return (
     <div className="container">
       <h2>Lighthouse Magic Quadrant</h2>
+      <div>
+        <label htmlFor="valueType">Select Value Type: </label>
+        <select
+          id="valueType"
+          value={valueType}
+          onChange={handleValueTypeChange}
+        >
+          <option value="general">General</option>
+          <option value="personal">Personal</option>
+        </select>
+      </div>
       <div id="magic-quadrant"></div>
     </div>
   );
 };
 
-const CreateGraph = (data) => {
+const CreateGraph = (data, valueType) => {
   const width = 600;
   const height = 600;
   const margin = { top: 50, right: 50, bottom: 50, left: 50 };
@@ -171,8 +186,8 @@ const CreateGraph = (data) => {
     .data(data)
     .enter()
     .append("circle")
-    .attr("cx", (d) => xScale(d.business_readiness))
-    .attr("cy", (d) => yScale(d.perceived_business_value))
+    .attr("cx", (d) => xScale(d[`business_readiness_${valueType}`]))
+    .attr("cy", (d) => yScale(d[`perceived_business_value_${valueType}`]))
     .attr("r", 5)
     .attr("fill", "blue")
     .style("cursor", "pointer")
@@ -181,7 +196,11 @@ const CreateGraph = (data) => {
       tooltip.transition().style("opacity", 1);
       tooltip
         .html(
-          `Name: ${d.name}<br>Business Readiness: ${d.business_readiness}<br>Perceived Business Value: ${d.perceived_business_value}`
+          `Name: ${d.name}<br>Business Readiness: ${
+            d[`business_readiness_${valueType}`]
+          }<br>Perceived Business Value: ${
+            d[`perceived_business_value_${valueType}`]
+          }`
         )
         .style("left", event.pageX + 5 + "px")
         .style("top", event.pageY - 28 + "px");
@@ -201,8 +220,8 @@ const CreateGraph = (data) => {
     .enter()
     .append("text")
     .attr("class", "label")
-    .attr("x", (d) => xScale(d.business_readiness) + 5)
-    .attr("y", (d) => yScale(d.perceived_business_value) - 5)
+    .attr("x", (d) => xScale(d[`business_readiness_${valueType}`]) + 5)
+    .attr("y", (d) => yScale(d[`perceived_business_value_${valueType}`]) - 5)
     .text((d) => d.name);
 
   // Add tooltip

@@ -29,13 +29,15 @@ const ModelSchema = new Schema({
   lawsuits: { type: Number, default: 0 },
   lawsuit_inf: { type: String },
   credibility: { type: Number, default: 0 },
-  risk: { type: Number, default: 0 },
+  safety: { type: Number, default: 0 },
   benchmarks: { type: Number, default: 0 },
-  business_readiness: { type: Number, default: 0 },
+  business_readiness_general: { type: Number, default: 0 },
+  business_readiness_personal: { type: Number, default: 0 },
   capabilities: { type: Number, default: 0 },
   success_stories: { type: Number, default: 0 },
   popularity: { type: Number, default: 0 },
-  perceived_business_value: { type: Number, default: 0 },
+  perceived_business_value_general: { type: Number, default: 0 },
+  perceived_business_value_personal: { type: Number, default: 0 },
 });
 
 const LLM = model("LLM", ModelSchema);
