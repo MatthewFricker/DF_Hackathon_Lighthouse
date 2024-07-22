@@ -74,9 +74,6 @@ function NavBar() {
         <Nav className="me-auto">
           <Nav.Link href="/">Home</Nav.Link>
           <Nav.Link href="/catalog">Catalog</Nav.Link>
-          {localStorage.getItem("role") === "admin" && (
-            <Nav.Link href="/addLMM">Add LMM</Nav.Link>
-          )}
           {localStorage.getItem("user") ? (
             <>
               <Nav.Link href="/feedback">Feedback</Nav.Link>
@@ -86,6 +83,12 @@ function NavBar() {
             </>
           ) : (
             <Nav.Link href="/login">Login</Nav.Link>
+          )}
+          {localStorage.getItem("role") === "admin" && (
+            <>
+              <Nav.Link href="/addLMM">Add LMM</Nav.Link>
+              <Nav.Link href="/viewFeedback">View Feedback</Nav.Link>
+            </>
           )}
         </Nav>
       </Navbar.Collapse>
