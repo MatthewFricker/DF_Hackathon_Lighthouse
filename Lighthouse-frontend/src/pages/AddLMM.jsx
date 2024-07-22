@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from 'react-router-dom'
-import { Form, Button, Col, Row, Container } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { Form, Button, Col, Row, Container, Card } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -50,7 +50,7 @@ const AddLLM = () => {
     lawsuits: 0,
     lawsuit_inf: "",
     credibility: 0,
-    risk: 0,
+    safety: 0,
     benchmarks: 0,
     business_readiness: 0,
     capabilities: 0,
@@ -104,389 +104,599 @@ const AddLLM = () => {
     });
   };
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
     try {
-      createModel(formData)
+      createModel(formData);
       navigate("/catalog");
     } catch (error) {
       console.error(error);
     }
-
   };
 
   return (
     <Container className="mt-5">
       <Row className="justify-content-md-center">
         <Col md={8}>
-          <h1>Data Entry Form</h1>
+          <h1 className="mb-4">New Model</h1>
           <Form onSubmit={handleSubmit}>
             {/* Required Fields */}
-            <h3>Required Fields</h3>
-            <Form.Group controlId="type">
-              <Form.Label>Type</Form.Label>
-              <Form.Control
-                type="text"
-                name="type"
-                value={formData.type}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="name">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="organization">
-              <Form.Label>Organization</Form.Label>
-              <Form.Control
-                type="text"
-                name="organization"
-                value={formData.organization}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="description">
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                type="text"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="created_date">
-              <Form.Label>Created Date</Form.Label>
-              <DatePicker
-                selected={
-                  formData.created_date
-                    ? parseDate(formData.created_date)
-                    : null
-                }
-                onChange={handleDateChange}
-                dateFormat="dd/MM/yyyy"
-                className="form-control"
-                placeholderText="Select a date"
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="url">
-              <Form.Label>URL</Form.Label>
-              <Form.Control
-                type="text"
-                name="url"
-                value={formData.url}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="access">
-              <Form.Label>Access</Form.Label>
-              <Form.Control
-                as="select"
-                name="access"
-                value={formData.access}
-                onChange={handleAccessChange}
-                required
-              >
-                <option value="">Select Access</option>
-                <option value="limited">Limited</option>
-                <option value="open">Open</option>
-                <option value="closed">Closed</option>
-              </Form.Control>
-            </Form.Group>
-
-            {/* Modality Checkboxes */}
-            <Form.Group controlId="modality">
-              <Form.Label>Modality</Form.Label>
-              <Form.Check
-                type="checkbox"
-                label="Image"
-                name="image"
-                checked={formData.modality.split(", ").includes("image")}
-                onChange={handleModalityChange}
-              />
-              <Form.Check
-                type="checkbox"
-                label="Text;Image"
-                name="textImage"
-                checked={formData.modality.split(", ").includes("textImage")}
-                onChange={handleModalityChange}
-              />
-              <Form.Check
-                type="checkbox"
-                label="Text"
-                name="text"
-                checked={formData.modality.split(", ").includes("text")}
-                onChange={handleModalityChange}
-              />
-              <Form.Check
-                type="checkbox"
-                label="Text;Video"
-                name="textVideo"
-                checked={formData.modality.split(", ").includes("textVideo")}
-                onChange={handleModalityChange}
-              />
-            </Form.Group>
+            <Card className="mb-4">
+              <Card.Header as="h3">Required Fields</Card.Header>
+              <Card.Body>
+                <Row className="mb-3">
+                  <Col md={4} className="d-flex align-items-center">
+                    <Form.Label className="fw-bold mb-0">Type</Form.Label>
+                  </Col>
+                  <Col md={8}>
+                    <Form.Control
+                      type="text"
+                      name="type"
+                      value={formData.type}
+                      onChange={handleChange}
+                      required
+                    />
+                  </Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col md={4} className="d-flex align-items-center">
+                    <Form.Label className="fw-bold mb-0">Name</Form.Label>
+                  </Col>
+                  <Col md={8}>
+                    <Form.Control
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                    />
+                  </Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col md={4} className="d-flex align-items-center">
+                    <Form.Label className="fw-bold mb-0">
+                      Organization
+                    </Form.Label>
+                  </Col>
+                  <Col md={8}>
+                    <Form.Control
+                      type="text"
+                      name="organization"
+                      value={formData.organization}
+                      onChange={handleChange}
+                      required
+                    />
+                  </Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col md={4} className="d-flex align-items-center">
+                    <Form.Label className="fw-bold mb-0">
+                      Description
+                    </Form.Label>
+                  </Col>
+                  <Col md={8}>
+                    <Form.Control
+                      type="text"
+                      name="description"
+                      value={formData.description}
+                      onChange={handleChange}
+                      required
+                    />
+                  </Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col md={4} className="d-flex align-items-center">
+                    <Form.Label className="fw-bold mb-0">
+                      Created Date
+                    </Form.Label>
+                  </Col>
+                  <Col md={8}>
+                    <DatePicker
+                      selected={
+                        formData.created_date
+                          ? parseDate(formData.created_date)
+                          : null
+                      }
+                      onChange={handleDateChange}
+                      dateFormat="dd/MM/yyyy"
+                      className="form-control"
+                      placeholderText="Select a date"
+                      required
+                    />
+                  </Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col md={4} className="d-flex align-items-center">
+                    <Form.Label className="fw-bold mb-0">URL</Form.Label>
+                  </Col>
+                  <Col md={8}>
+                    <Form.Control
+                      type="text"
+                      name="url"
+                      value={formData.url}
+                      onChange={handleChange}
+                      required
+                    />
+                  </Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col md={4} className="d-flex align-items-center">
+                    <Form.Label className="fw-bold mb-0">Access</Form.Label>
+                  </Col>
+                  <Col md={8}>
+                    <Form.Control
+                      as="select"
+                      name="access"
+                      value={formData.access}
+                      onChange={handleAccessChange}
+                      required
+                    >
+                      <option value="">Select Access</option>
+                      <option value="limited">Limited</option>
+                      <option value="open">Open</option>
+                      <option value="closed">Closed</option>
+                    </Form.Control>
+                  </Col>
+                </Row>
+                <Form.Group controlId="modality" className="mb-3">
+                  <Row className="mb-3">
+                    <Col md={4} className="d-flex align-items-center">
+                      <Form.Label className="fw-bold mb-0">Modality</Form.Label>
+                    </Col>
+                    <Col md={8}>
+                      <div>
+                        <Form.Check
+                          inline
+                          type="checkbox"
+                          label="Image"
+                          name="image"
+                          checked={formData.modality
+                            .split(", ")
+                            .includes("image")}
+                          onChange={handleModalityChange}
+                        />
+                        <Form.Check
+                          inline
+                          type="checkbox"
+                          label="Text;Image"
+                          name="textImage"
+                          checked={formData.modality
+                            .split(", ")
+                            .includes("textImage")}
+                          onChange={handleModalityChange}
+                        />
+                        <Form.Check
+                          inline
+                          type="checkbox"
+                          label="Text"
+                          name="text"
+                          checked={formData.modality
+                            .split(", ")
+                            .includes("text")}
+                          onChange={handleModalityChange}
+                        />
+                        <Form.Check
+                          inline
+                          type="checkbox"
+                          label="Text;Video"
+                          name="textVideo"
+                          checked={formData.modality
+                            .split(", ")
+                            .includes("textVideo")}
+                          onChange={handleModalityChange}
+                        />
+                      </div>
+                    </Col>
+                  </Row>
+                </Form.Group>
+              </Card.Body>
+            </Card>
 
             {/* Numbered Fields */}
-            <h3 className="mt-4">Numbered Fields</h3>
-            <Form.Group controlId="lawsuits">
-              <Form.Label>Lawsuits</Form.Label>
-              <Form.Control
-                type="number"
-                name="lawsuits"
-                value={formData.lawsuits}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="credibility">
-              <Form.Label>Credibility</Form.Label>
-              <Form.Control
-                type="number"
-                name="credibility"
-                value={formData.credibility}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="risk">
-              <Form.Label>Risk</Form.Label>
-              <Form.Control
-                type="number"
-                name="risk"
-                value={formData.risk}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="benchmarks">
-              <Form.Label>Benchmarks</Form.Label>
-              <Form.Control
-                type="number"
-                name="benchmarks"
-                value={formData.benchmarks}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="business_readiness">
-              <Form.Label>Business Readiness</Form.Label>
-              <Form.Control
-                type="number"
-                name="business_readiness"
-                value={formData.business_readiness}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="capabilities">
-              <Form.Label>Capabilities</Form.Label>
-              <Form.Control
-                type="number"
-                name="capabilities"
-                value={formData.capabilities}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="success_stories">
-              <Form.Label>Success Stories</Form.Label>
-              <Form.Control
-                type="number"
-                name="success_stories"
-                value={formData.success_stories}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="popularity">
-              <Form.Label>Popularity</Form.Label>
-              <Form.Control
-                type="number"
-                name="popularity"
-                value={formData.popularity}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="perceived_business_value">
-              <Form.Label>Perceived Business Value</Form.Label>
-              <Form.Control
-                type="number"
-                name="perceived_business_value"
-                value={formData.perceived_business_value}
-                onChange={handleChange}
-              />
-            </Form.Group>
+            <Card className="mb-4">
+              <Card.Header as="h3">Scoring</Card.Header>
+              <Card.Body>
+                <Row>
+                  <Col md={6}>
+                    <Row className="mb-3">
+                      <Col md={6} className="d-flex align-items-center">
+                        <Form.Label className="fw-bold mb-0">
+                          Business Readiness
+                        </Form.Label>
+                      </Col>
+                      <Col md={6}>
+                        <Form.Control
+                          type="number"
+                          name="business_readiness"
+                          value={formData.business_readiness}
+                          onChange={handleChange}
+                        />
+                      </Col>
+                    </Row>
+                    <Row className="mb-3">
+                      <Col md={6} className="d-flex align-items-center">
+                        <Form.Label className="fw-bold mb-0">
+                          Benchmarks
+                        </Form.Label>
+                      </Col>
+                      <Col md={6}>
+                        <Form.Control
+                          type="number"
+                          name="benchmarks"
+                          value={formData.benchmarks}
+                          onChange={handleChange}
+                        />
+                      </Col>
+                    </Row>
+                    <Row className="mb-3">
+                      <Col md={6} className="d-flex align-items-center">
+                        <Form.Label className="fw-bold mb-0">Safety</Form.Label>
+                      </Col>
+                      <Col md={6}>
+                        <Form.Control
+                          type="number"
+                          name="safety"
+                          value={formData.safety}
+                          onChange={handleChange}
+                        />
+                      </Col>
+                    </Row>
+                    <Row className="mb-3">
+                      <Col md={6} className="d-flex align-items-center">
+                        <Form.Label className="fw-bold mb-0">
+                          Credibility
+                        </Form.Label>
+                      </Col>
+                      <Col md={6}>
+                        <Form.Control
+                          type="number"
+                          name="credibility"
+                          value={formData.credibility}
+                          onChange={handleChange}
+                        />
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col md={6}>
+                    <Row className="mb-3">
+                      <Col md={6} className="d-flex align-items-center">
+                        <Form.Label className="fw-bold mb-0">
+                          Perceived Business Value
+                        </Form.Label>
+                      </Col>
+                      <Col md={6}>
+                        <Form.Control
+                          type="number"
+                          name="perceived_business_value"
+                          value={formData.perceived_business_value}
+                          onChange={handleChange}
+                        />
+                      </Col>
+                    </Row>
+                    <Row className="mb-3">
+                      <Col md={6} className="d-flex align-items-center">
+                        <Form.Label className="fw-bold mb-0">
+                          Popularity
+                        </Form.Label>
+                      </Col>
+                      <Col md={6}>
+                        <Form.Control
+                          type="number"
+                          name="popularity"
+                          value={formData.popularity}
+                          onChange={handleChange}
+                        />
+                      </Col>
+                    </Row>
+                    <Row className="mb-3">
+                      <Col md={6} className="d-flex align-items-center">
+                        <Form.Label className="fw-bold mb-0">
+                          Success Stories
+                        </Form.Label>
+                      </Col>
+                      <Col md={6}>
+                        <Form.Control
+                          type="number"
+                          name="success_stories"
+                          value={formData.success_stories}
+                          onChange={handleChange}
+                        />
+                      </Col>
+                    </Row>
+                    <Row className="mb-3">
+                      <Col md={6} className="d-flex align-items-center">
+                        <Form.Label className="fw-bold mb-0">
+                          Capabilities
+                        </Form.Label>
+                      </Col>
+                      <Col md={6}>
+                        <Form.Control
+                          type="number"
+                          name="capabilities"
+                          value={formData.capabilities}
+                          onChange={handleChange}
+                        />
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+              </Card.Body>
+            </Card>
 
             {/* Other Fields */}
-            <h3 className="mt-4">Other Fields</h3>
-            <Form.Group controlId="size">
-              <Form.Label>Size</Form.Label>
-              <Form.Control
-                type="text"
-                name="size"
-                value={formData.size}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="sample">
-              <Form.Label>Sample</Form.Label>
-              <Form.Control
-                type="text"
-                name="sample"
-                value={formData.sample}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="analysis">
-              <Form.Label>Analysis</Form.Label>
-              <Form.Control
-                type="text"
-                name="analysis"
-                value={formData.analysis}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="dependencies">
-              <Form.Label>Dependencies</Form.Label>
-              <Form.Control
-                type="text"
-                name="dependencies"
-                value={formData.dependencies}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="quality_control">
-              <Form.Label>Quality Control</Form.Label>
-              <Form.Control
-                type="text"
-                name="quality_control"
-                value={formData.quality_control}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="license">
-              <Form.Label>License</Form.Label>
-              <Form.Control
-                type="text"
-                name="license"
-                value={formData.license}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="intended_uses">
-              <Form.Label>Intended Uses</Form.Label>
-              <Form.Control
-                type="text"
-                name="intended_uses"
-                value={formData.intended_uses}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="prohibited_uses">
-              <Form.Label>Prohibited Uses</Form.Label>
-              <Form.Control
-                type="text"
-                name="prohibited_uses"
-                value={formData.prohibited_uses}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="monitoring">
-              <Form.Label>Monitoring</Form.Label>
-              <Form.Control
-                type="text"
-                name="monitoring"
-                value={formData.monitoring}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="feedback">
-              <Form.Label>Feedback</Form.Label>
-              <Form.Control
-                type="text"
-                name="feedback"
-                value={formData.feedback}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="model_card">
-              <Form.Label>Model Card</Form.Label>
-              <Form.Control
-                type="text"
-                name="model_card"
-                value={formData.model_card}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="training_emissions">
-              <Form.Label>Training Emissions</Form.Label>
-              <Form.Control
-                type="text"
-                name="training_emissions"
-                value={formData.training_emissions}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="training_time">
-              <Form.Label>Training Time</Form.Label>
-              <Form.Control
-                type="text"
-                name="training_time"
-                value={formData.training_time}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="training_hardware">
-              <Form.Label>Training Hardware</Form.Label>
-              <Form.Control
-                type="text"
-                name="training_hardware"
-                value={formData.training_hardware}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="monthly_active_users">
-              <Form.Label>Monthly Active Users</Form.Label>
-              <Form.Control
-                type="text"
-                name="monthly_active_users"
-                value={formData.monthly_active_users}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="user_distribution">
-              <Form.Label>User Distribution</Form.Label>
-              <Form.Control
-                type="text"
-                name="user_distribution"
-                value={formData.user_distribution}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="failures">
-              <Form.Label>Failures</Form.Label>
-              <Form.Control
-                type="text"
-                name="failures"
-                value={formData.failures}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="lawsuit_inf">
-              <Form.Label>Lawsuit Information</Form.Label>
-              <Form.Control
-                type="text"
-                name="lawsuit_inf"
-                value={formData.lawsuit_inf}
-                onChange={handleChange}
-              />
-            </Form.Group>
+            <Card className="mb-4">
+              <Card.Header as="h3">Other Fields</Card.Header>
+              <Card.Body>
+                <Row className="mb-3">
+                  <Col md={4} className="d-flex align-items-center">
+                    <Form.Label className="fw-bold mb-0">Lawsuits</Form.Label>
+                  </Col>
+                  <Col md={8}>
+                    <Form.Control
+                      type="number"
+                      name="lawsuits"
+                      value={formData.lawsuits}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col md={4} className="d-flex align-items-center">
+                    <Form.Label className="fw-bold mb-0">Size</Form.Label>
+                  </Col>
+                  <Col md={8}>
+                    <Form.Control
+                      type="text"
+                      name="size"
+                      value={formData.size}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col md={4} className="d-flex align-items-center">
+                    <Form.Label className="fw-bold mb-0">Sample</Form.Label>
+                  </Col>
+                  <Col md={8}>
+                    <Form.Control
+                      type="text"
+                      name="sample"
+                      value={formData.sample}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col md={4} className="d-flex align-items-center">
+                    <Form.Label className="fw-bold mb-0">Analysis</Form.Label>
+                  </Col>
+                  <Col md={8}>
+                    <Form.Control
+                      type="text"
+                      name="analysis"
+                      value={formData.analysis}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col md={4} className="d-flex align-items-center">
+                    <Form.Label className="fw-bold mb-0">
+                      Dependencies
+                    </Form.Label>
+                  </Col>
+                  <Col md={8}>
+                    <Form.Control
+                      type="text"
+                      name="dependencies"
+                      value={formData.dependencies}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col md={4} className="d-flex align-items-center">
+                    <Form.Label className="fw-bold mb-0">
+                      Quality Control
+                    </Form.Label>
+                  </Col>
+                  <Col md={8}>
+                    <Form.Control
+                      type="text"
+                      name="quality_control"
+                      value={formData.quality_control}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col md={4} className="d-flex align-items-center">
+                    <Form.Label className="fw-bold mb-0">License</Form.Label>
+                  </Col>
+                  <Col md={8}>
+                    <Form.Control
+                      type="text"
+                      name="license"
+                      value={formData.license}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col md={4} className="d-flex align-items-center">
+                    <Form.Label className="fw-bold mb-0">
+                      Intended Uses
+                    </Form.Label>
+                  </Col>
+                  <Col md={8}>
+                    <Form.Control
+                      type="text"
+                      name="intended_uses"
+                      value={formData.intended_uses}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col md={4} className="d-flex align-items-center">
+                    <Form.Label className="fw-bold mb-0">
+                      Prohibited Uses
+                    </Form.Label>
+                  </Col>
+                  <Col md={8}>
+                    <Form.Control
+                      type="text"
+                      name="prohibited_uses"
+                      value={formData.prohibited_uses}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col md={4} className="d-flex align-items-center">
+                    <Form.Label className="fw-bold mb-0">Monitoring</Form.Label>
+                  </Col>
+                  <Col md={8}>
+                    <Form.Control
+                      type="text"
+                      name="monitoring"
+                      value={formData.monitoring}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col md={4} className="d-flex align-items-center">
+                    <Form.Label className="fw-bold mb-0">Feedback</Form.Label>
+                  </Col>
+                  <Col md={8}>
+                    <Form.Control
+                      type="text"
+                      name="feedback"
+                      value={formData.feedback}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col md={4} className="d-flex align-items-center">
+                    <Form.Label className="fw-bold mb-0">Model Card</Form.Label>
+                  </Col>
+                  <Col md={8}>
+                    <Form.Control
+                      type="text"
+                      name="model_card"
+                      value={formData.model_card}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col md={4} className="d-flex align-items-center">
+                    <Form.Label className="fw-bold mb-0">
+                      Training Emissions
+                    </Form.Label>
+                  </Col>
+                  <Col md={8}>
+                    <Form.Control
+                      type="text"
+                      name="training_emissions"
+                      value={formData.training_emissions}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col md={4} className="d-flex align-items-center">
+                    <Form.Label className="fw-bold mb-0">
+                      Training Time
+                    </Form.Label>
+                  </Col>
+                  <Col md={8}>
+                    <Form.Control
+                      type="text"
+                      name="training_time"
+                      value={formData.training_time}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col md={4} className="d-flex align-items-center">
+                    <Form.Label className="fw-bold mb-0">
+                      Training Hardware
+                    </Form.Label>
+                  </Col>
+                  <Col md={8}>
+                    <Form.Control
+                      type="text"
+                      name="training_hardware"
+                      value={formData.training_hardware}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col md={4} className="d-flex align-items-center">
+                    <Form.Label className="fw-bold mb-0">
+                      Monthly Active Users
+                    </Form.Label>
+                  </Col>
+                  <Col md={8}>
+                    <Form.Control
+                      type="text"
+                      name="monthly_active_users"
+                      value={formData.monthly_active_users}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col md={4} className="d-flex align-items-center">
+                    <Form.Label className="fw-bold mb-0">
+                      User Distribution
+                    </Form.Label>
+                  </Col>
+                  <Col md={8}>
+                    <Form.Control
+                      type="text"
+                      name="user_distribution"
+                      value={formData.user_distribution}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col md={4} className="d-flex align-items-center">
+                    <Form.Label className="fw-bold mb-0">Failures</Form.Label>
+                  </Col>
+                  <Col md={8}>
+                    <Form.Control
+                      type="text"
+                      name="failures"
+                      value={formData.failures}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col md={4} className="d-flex align-items-center">
+                    <Form.Label className="fw-bold mb-0">
+                      Lawsuit Information
+                    </Form.Label>
+                  </Col>
+                  <Col md={8}>
+                    <Form.Control
+                      type="text"
+                      name="lawsuit_inf"
+                      value={formData.lawsuit_inf}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Row>
+              </Card.Body>
+            </Card>
 
             <Button variant="primary" type="submit" className="mt-3">
               Submit
