@@ -28,7 +28,7 @@ function NavBar() {
   useEffect(() => {
     if (searchQuery) {
       const lowerCaseQuery = searchQuery.toLowerCase();
-
+  
       const uniqueMatches = new Map();
       data.forEach((item) => {
         let matchSource = null;
@@ -37,17 +37,17 @@ function NavBar() {
         } else if (item.organization.toLowerCase().includes(lowerCaseQuery)) {
           matchSource = "organization";
         }
-
+  
         if (matchSource && !uniqueMatches.has(item.id)) {
           uniqueMatches.set(item.id, { ...item, matchSource });
         }
       });
-
+  
       setFilteredData(Array.from(uniqueMatches.values()));
     } else {
       setFilteredData([]);
     }
-  }, [searchQuery]);
+  }, [searchQuery, data]);
 
   const handleLogout = () => {
     localStorage.clear();
