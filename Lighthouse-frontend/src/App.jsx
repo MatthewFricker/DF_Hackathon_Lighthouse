@@ -8,6 +8,9 @@ import Detail from "./pages/Detail";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AddLMM from "./pages/AddLMM";
+import LeaveFeedback from "./pages/LeaveFeedback";
+import FeedbackTable from "./pages/FeedbackTable";
+
 
 import "./App.css";
 
@@ -24,6 +27,8 @@ function App() {
         <Route path="/catalog" element={<Catalog />} />
         <Route path="/model/:name" element={<Detail />} />
         <Route path="/addLMM" element={<AddLMM />} />
+        <Route path="/feedback" element={<LeaveFeedback />} />
+        <Route path="/viewFeedback" element={<FeedbackTable />} />
       </Routes>
     </>
   );

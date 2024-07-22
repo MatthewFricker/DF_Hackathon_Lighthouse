@@ -1,0 +1,19 @@
+.feedback-table {
+  table-layout: auto;
+  width: 100%;
+}
+
+.feedback-table th,
+.feedback-table td {
+  white-space: nowrap;
+}
+
+.feedback-table th:nth-child(5),
+.feedback-table td:nth-child(5) {
+  white-space: normal;
+  width: 100%;
+}
+
+.sortable {
+  cursor: pointer;
+}
