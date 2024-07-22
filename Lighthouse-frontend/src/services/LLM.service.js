@@ -10,3 +10,13 @@ export const getModels = async () => {
     return error;
   }
 };
+
+export const createModel = async (model) => {
+  try {
+    console.log(model);
+    const response = await axios.post(`${URL}/`, model);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+}
