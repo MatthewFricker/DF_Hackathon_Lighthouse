@@ -78,9 +78,12 @@ function NavBar() {
             <Nav.Link href="/addLMM">Add LMM</Nav.Link>
           )}
           {localStorage.getItem("user") ? (
-            <Nav.Link onClick={handleLogout} href="/">
-              Logout
-            </Nav.Link>
+            <>
+              <Nav.Link href="/feedback">Feedback</Nav.Link>
+              <Nav.Link onClick={handleLogout} href="/">
+                Logout
+              </Nav.Link>
+            </>
           ) : (
             <Nav.Link href="/login">Login</Nav.Link>
           )}
