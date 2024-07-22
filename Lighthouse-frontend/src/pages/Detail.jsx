@@ -70,11 +70,11 @@ const Detail = () => {
                       <tr>
                         <th style={{ width: "50%" }}>
                           Business Readiness:{" "}
-                          {llm.business_readiness.toFixed(2)}
+                          {llm.business_readiness_general.toFixed(2)}
                         </th>
                         <th style={{ width: "50%" }}>
                           Perceived Business Value:{" "}
-                          {llm.perceived_business_value.toFixed(2)}
+                          {llm.perceived_business_value_general.toFixed(2)}
                         </th>
                       </tr>
                     </thead>
