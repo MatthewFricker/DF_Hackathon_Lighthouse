@@ -38,7 +38,7 @@ const GartnerMagicQuadrant = () => {
 
   return (
     <div className="container">
-      <h2>Gartner Magic Quadrant</h2>
+      <h2>Lighthouse Magic Quadrant</h2>
       <div id="magic-quadrant"></div>
     </div>
   );
@@ -161,7 +161,7 @@ const CreateGraph = (data) => {
   };
 
   addLabel(7.5, 9.5, "Leaders");
-  addLabel(2.5, 9.5, "Competitors");
+  addLabel(2.5, 9.5, "Respected");
   addLabel(2.5, 0.5, "Niche Players");
   addLabel(7.5, 0.5, "Emerging Opportunities");
 

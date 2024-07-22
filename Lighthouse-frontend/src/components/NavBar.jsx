@@ -12,17 +12,17 @@ import data from "../assets/LLMData2.json";
 function NavBar() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
 
-  useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    if (token) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("accessToken");
+  //   if (token) {
+  //     setIsLoggedIn(true);
+  //   } else {
+  //     setIsLoggedIn(false);
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (searchQuery) {
@@ -50,7 +50,7 @@ function NavBar() {
 
   const handleLogout = () => {
     localStorage.clear();
-    setIsLoggedIn(false);
+    // setIsLoggedIn(false);
   };
 
   const handleSelect = (model) => {
@@ -74,15 +74,15 @@ function NavBar() {
         <Nav className="me-auto">
           <Nav.Link href="/">Home</Nav.Link>
           <Nav.Link href="/catalog">Catalog</Nav.Link>
-
-          {isLoggedIn ? (
+          {localStorage.getItem("role") === "admin" && (
+            <Nav.Link href="/addLMM">Add LMM</Nav.Link>
+          )}
+          {localStorage.getItem("user") ? (
             <Nav.Link onClick={handleLogout} href="/">
               Logout
             </Nav.Link>
           ) : (
-            <>
-              <Nav.Link href="/login">Login</Nav.Link>
-            </>
+            <Nav.Link href="/login">Login</Nav.Link>
           )}
         </Nav>
       </Navbar.Collapse>

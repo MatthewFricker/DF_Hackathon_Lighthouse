@@ -7,6 +7,7 @@ import Catalog from "./pages/Catalog";
 import Detail from "./pages/Detail";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import AddLMM from "./pages/AddLMM";
 
 import "./App.css";
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/catalog" element={<Catalog />} />
         <Route path="/model/:name" element={<Detail />} />
+        <Route path="/addLMM" element={<AddLMM />} />
       </Routes>
     </>
   );

@@ -88,7 +88,7 @@ const Detail = () => {
                         </td>
                       </tr>
                       <tr>
-                        <td style={{ width: "50%" }}>Risk: {llm.risk}</td>
+                        <td style={{ width: "50%" }}>Safety: {llm.safety}</td>
                         <td style={{ width: "50%" }}>
                           Known Successes: {llm.known_successes}
                         </td>
@@ -119,7 +119,6 @@ const Detail = () => {
                 {renderField("Size", llm.size)}
                 {renderField("Sample", llm.sample)}
                 {renderField("Analysis", llm.analysis)}
-                {renderField("Dependencies", llm.dependencies)}
                 {renderField("Included", llm.included)}
                 {renderField("Excluded", llm.excluded)}
                 {renderField("Quality Control", llm.quality_control)}

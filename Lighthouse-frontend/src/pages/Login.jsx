@@ -20,6 +20,7 @@ const Login = () => {
       console.log(data.user);
       localStorage.setItem("user", data.user.user.username);
       localStorage.setItem("userId", data.user.user._id);
+      localStorage.setItem("role", data.user.user.role);
       localStorage.setItem("accessToken", data.user.accessToken);
       setShowToast(true);
       console.log("Login successful!");
