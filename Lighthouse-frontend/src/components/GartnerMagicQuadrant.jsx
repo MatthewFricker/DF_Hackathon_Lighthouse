@@ -7,6 +7,7 @@ const GartnerMagicQuadrant = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [valueType, setValueType] = useState("general");
+  const [industry, setIndustry] = useState("default");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,12 +25,16 @@ const GartnerMagicQuadrant = () => {
 
   useEffect(() => {
     if (data) {
-      CreateGraph(data, valueType);
+      CreateGraph(data, valueType, industry);
     }
-  }, [data, valueType]);
+  }, [data, valueType, industry]);
 
   const handleValueTypeChange = (event) => {
     setValueType(event.target.value);
+  };
+
+  const handleIndustryChange = (event) => {
+    setIndustry(event.target.value);
   };
 
   if (loading) {
@@ -54,12 +59,30 @@ const GartnerMagicQuadrant = () => {
           <option value="personal">Personal</option>
         </select>
       </div>
+      <div>
+        <label htmlFor="industry">Select Industry: </label>
+        <select id="industry" value={industry} onChange={handleIndustryChange}>
+          <option value="default">Default</option>
+          <option value="banking">Banking</option>
+          <option value="healthcare">Healthcare</option>
+          <option value="legal">Legal</option>
+          <option value="telecommunication">Telecommunication</option>
+        </select>
+      </div>
       <div id="magic-quadrant"></div>
     </div>
   );
 };
 
-const CreateGraph = (data, valueType) => {
+const industryModifiers = {
+  default: { businessReadiness: 1.0, perceivedBusinessValue: 1.0 },
+  banking: { businessReadiness: 0.6, perceivedBusinessValue: 0.7 },
+  healthcare: { businessReadiness: 0.7, perceivedBusinessValue: 0.6 },
+  legal: { businessReadiness: 0.5, perceivedBusinessValue: 0.5 },
+  telecommunication: { businessReadiness: 0.8, perceivedBusinessValue: 0.9 },
+};
+
+const CreateGraph = (data, valueType, industry) => {
   const width = 600;
   const height = 600;
   const margin = { top: 50, right: 50, bottom: 50, left: 50 };
@@ -180,14 +203,32 @@ const CreateGraph = (data, valueType) => {
   addLabel(2.5, 0.5, "Niche Players");
   addLabel(7.5, 0.5, "Emerging Opportunities");
 
+  // Apply industry-specific modifiers
+  const modifiers = industryModifiers[industry];
+
   // Add points
   svg
     .selectAll("circle")
     .data(data)
     .enter()
     .append("circle")
-    .attr("cx", (d) => xScale(d[`business_readiness_${valueType}`]))
-    .attr("cy", (d) => yScale(d[`perceived_business_value_${valueType}`]))
+    .attr("cx", (d) =>
+      xScale(
+        Math.min(
+          d[`business_readiness_${valueType}`] * modifiers.businessReadiness,
+          10
+        )
+      )
+    )
+    .attr("cy", (d) =>
+      yScale(
+        Math.min(
+          d[`perceived_business_value_${valueType}`] *
+            modifiers.perceivedBusinessValue,
+          10
+        )
+      )
+    )
     .attr("r", 5)
     .attr("fill", "blue")
     .style("cursor", "pointer")
@@ -197,9 +238,10 @@ const CreateGraph = (data, valueType) => {
       tooltip
         .html(
           `Name: ${d.name}<br>Business Readiness: ${
-            d[`business_readiness_${valueType}`]
+            d[`business_readiness_${valueType}`] * modifiers.businessReadiness
           }<br>Perceived Business Value: ${
-            d[`perceived_business_value_${valueType}`]
+            d[`perceived_business_value_${valueType}`] *
+            modifiers.perceivedBusinessValue
           }`
         )
         .style("left", event.pageX + 5 + "px")
@@ -220,8 +262,27 @@ const CreateGraph = (data, valueType) => {
     .enter()
     .append("text")
     .attr("class", "label")
-    .attr("x", (d) => xScale(d[`business_readiness_${valueType}`]) + 5)
-    .attr("y", (d) => yScale(d[`perceived_business_value_${valueType}`]) - 5)
+    .attr(
+      "x",
+      (d) =>
+        xScale(
+          Math.min(
+            d[`business_readiness_${valueType}`] * modifiers.businessReadiness,
+            10
+          )
+        ) + 5
+    )
+    .attr(
+      "y",
+      (d) =>
+        yScale(
+          Math.min(
+            d[`perceived_business_value_${valueType}`] *
+              modifiers.perceivedBusinessValue,
+            10
+          )
+        ) - 5
+    )
     .text((d) => d.name);
 
   // Add tooltip
