@@ -114,7 +114,10 @@ const CatalogTable = () => {
     const useCasesFilter =
       !filters.useCases.length ||
       filters.useCases.every((filter) =>
-        item.use_cases_industries?.split(", ").includes(filter)
+        item.use_cases_industries
+          ?.toLowerCase()
+          .split(", ")
+          .includes(filter.toLowerCase())
       );
     const modalityFilter =
       !filters.modality.length ||
@@ -127,13 +130,22 @@ const CatalogTable = () => {
     return useCasesFilter && modalityFilter && accessFilter;
   });
 
+  const capitalize = (str) =>
+    str.replace(/\b\w/g, (char) => char.toUpperCase());
+
   const allUseCases = Array.from(
     new Set(
       data.flatMap((item) =>
-        item.use_cases_industries ? item.use_cases_industries.split(", ") : []
+        item.use_cases_industries
+          ? item.use_cases_industries
+              .split(", ")
+              .map((uc) => uc.trim().toLowerCase())
+          : []
       )
     )
-  ).sort((a, b) => a.localeCompare(b));
+  )
+    .map((useCase) => capitalize(useCase))
+    .sort((a, b) => a.localeCompare(b));
 
   const allModality = Array.from(
     new Set(

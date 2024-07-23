@@ -22,7 +22,7 @@ export const createFeedback = async (feedback) => {
 
 export const deleteFeedback = async (id) => {
   try {
-    const response = await axios.delete(`${URL}/feedback`, id);
+    const response = await axios.delete(`${URL}/feedback`, { data: { id } });
     return response.data;
   } catch (error) {
     return error;

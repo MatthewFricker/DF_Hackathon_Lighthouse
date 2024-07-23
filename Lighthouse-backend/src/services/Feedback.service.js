@@ -31,6 +31,7 @@ export default class FeedbackService {
 
   deleteFeedback = async (id) => {
     try {
+      console.log(id);
       return await Feedback.findByIdAndDelete(id);
     } catch (e) {
       throw new Error(e);

@@ -23,7 +23,7 @@ export const createModel = async (model) => {
 
 export const deleteModel = async (id) => {
   try {
-    const response = await axios.delete(`${URL}/`, id);
+    const response = await axios.delete(`${URL}/`, { data: { id } });
     return response.data;
   } catch (error) {
     return error;
