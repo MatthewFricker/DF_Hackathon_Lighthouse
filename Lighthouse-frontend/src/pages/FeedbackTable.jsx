@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Table, Form } from "react-bootstrap";
-import "./FeedbackTable.css"; // Import the CSS file
+import { Table, Form, Button } from "react-bootstrap";
+import "./FeedbackTable.css";
 
-import { getFeedback } from "../services/feedback.service.js";
+import { getFeedback, deleteFeedback } from "../services/feedback.service.js";
 
 const FeedbackTable = () => {
   const [data, setData] = useState(null);
@@ -27,6 +27,15 @@ const FeedbackTable = () => {
     };
     fetchData();
   }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteFeedback({ id });
+      setData((prevData) => prevData.filter((feedback) => feedback._id !== id));
+    } catch (error) {
+      console.error("Failed to delete feedback", error);
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -105,6 +114,7 @@ const FeedbackTable = () => {
             <th>Email</th>
             <th>Rating</th>
             <th>Description</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -115,6 +125,14 @@ const FeedbackTable = () => {
               <td>{feedback.email}</td>
               <td>{feedback.rating}</td>
               <td>{feedback.description}</td>
+              <td>
+                <Button
+                  variant="danger"
+                  onClick={() => handleDelete(feedback._id)}
+                >
+                  Delete
+                </Button>
+              </td>
             </tr>
           ))}
         </tbody>

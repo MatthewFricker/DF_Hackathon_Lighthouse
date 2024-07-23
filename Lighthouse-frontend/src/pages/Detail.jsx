@@ -1,15 +1,24 @@
-import { useParams, Link } from "react-router-dom";
-import { Container, Row, Col, Card, Button, Table } from "react-bootstrap";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Button,
+  Table,
+  Form,
+} from "react-bootstrap";
 import { useState, useEffect } from "react";
 
-import { getModels } from "../services/LLM.service.js";
-
-// import data from "../assets/LLMData4.json";
+import { getModels, deleteModel } from "../services/LLM.service.js";
 
 const Detail = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const { name } = useParams();
+  const role = localStorage.getItem("role");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,6 +33,18 @@ const Detail = () => {
     };
     fetchData();
   }, []);
+
+  const handleDelete = async (id) => {
+    if (confirmDelete) {
+      try {
+        console.log(id);
+        await deleteModel({ id });
+        navigate("/catalog");
+      } catch (error) {
+        console.error("Failed to delete model", error);
+      }
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -143,6 +164,25 @@ const Detail = () => {
                     Back to Catalog
                   </Button>
                 </Link>
+
+                {role === "admin" && (
+                  <div className="d-flex align-items-center mt-3">
+                    <Form.Check
+                      type="checkbox"
+                      label="Confirm delete"
+                      onChange={(e) => setConfirmDelete(e.target.checked)}
+                      checked={confirmDelete}
+                      className="me-2"
+                    />
+                    <Button
+                      variant="danger"
+                      onClick={() => handleDelete(llm._id)}
+                      disabled={!confirmDelete}
+                    >
+                      Delete Model
+                    </Button>
+                  </div>
+                )}
               </Card.Body>
             </Card>
           </Col>

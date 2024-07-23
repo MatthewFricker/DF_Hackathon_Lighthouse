@@ -20,3 +20,12 @@ export const createModel = async (model) => {
     return error;
   }
 }
+
+export const deleteModel = async (id) => {
+  try {
+    const response = await axios.delete(`${URL}/`, id);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+}

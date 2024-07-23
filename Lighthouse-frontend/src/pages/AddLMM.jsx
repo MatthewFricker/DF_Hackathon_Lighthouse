@@ -32,7 +32,7 @@ const AddLLM = () => {
     size: "",
     sample: "",
     analysis: "",
-    dependencies: "",
+    dependencies: [],
     quality_control: "",
     access: "",
     license: "",
@@ -52,11 +52,13 @@ const AddLLM = () => {
     credibility: 0,
     safety: 0,
     benchmarks: 0,
-    business_readiness: 0,
+    business_readiness_general: 0,
+    business_readiness_personal: 0,
     capabilities: 0,
     success_stories: 0,
     popularity: 0,
-    perceived_business_value: 0,
+    perceived_business_value_general: 0,
+    perceived_business_value_personal: 0,
   });
 
   const navigate = useNavigate();
@@ -101,6 +103,15 @@ const AddLLM = () => {
     setFormData({
       ...formData,
       modality: modalities.join(", "),
+    });
+  };
+
+  const handleDependenciesChange = (e) => {
+    const { value } = e.target;
+    const dependencies = value.split(",").map((dep) => dep.trim());
+    setFormData({
+      ...formData,
+      dependencies,
     });
   };
 
@@ -290,6 +301,76 @@ const AddLLM = () => {
                     </Col>
                   </Row>
                 </Form.Group>
+                <Row className="mb-3">
+                  <Col md={6}>
+                    <Row className="mb-3">
+                      <Col md={6} className="d-flex align-items-center">
+                        <Form.Label className="fw-bold mb-0">
+                          Business Readiness (General)
+                        </Form.Label>
+                      </Col>
+                      <Col md={6}>
+                        <Form.Control
+                          type="number"
+                          name="business_readiness_general"
+                          value={formData.business_readiness_general}
+                          onChange={handleChange}
+                          required
+                        />
+                      </Col>
+                    </Row>
+                    <Row className="mb-3">
+                      <Col md={6} className="d-flex align-items-center">
+                        <Form.Label className="fw-bold mb-0">
+                          Perceived Business Value (General)
+                        </Form.Label>
+                      </Col>
+                      <Col md={6}>
+                        <Form.Control
+                          type="number"
+                          name="perceived_business_value_general"
+                          value={formData.perceived_business_value_general}
+                          onChange={handleChange}
+                          required
+                        />
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col md={6}>
+                    <Row className="mb-3">
+                      <Col md={6} className="d-flex align-items-center">
+                        <Form.Label className="fw-bold mb-0">
+                          Business Readiness (Personal)
+                        </Form.Label>
+                      </Col>
+                      <Col md={6}>
+                        <Form.Control
+                          type="number"
+                          name="business_readiness_personal"
+                          value={formData.business_readiness_personal}
+                          onChange={handleChange}
+                          required
+                        />
+                      </Col>
+                    </Row>
+                    <Row className="mb-3">
+                      <Col md={6} className="d-flex align-items-center">
+                        <Form.Label className="fw-bold mb-0">
+                          Perceived Business Value (Personal)
+                        </Form.Label>
+                      </Col>
+                      <Col md={6}>
+                        <Form.Control
+                          type="number"
+                          name="perceived_business_value_personal"
+                          value={formData.perceived_business_value_personal}
+                          onChange={handleChange}
+                          required
+                        />
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
               </Card.Body>
             </Card>
 
@@ -299,21 +380,6 @@ const AddLLM = () => {
               <Card.Body>
                 <Row>
                   <Col md={6}>
-                    <Row className="mb-3">
-                      <Col md={6} className="d-flex align-items-center">
-                        <Form.Label className="fw-bold mb-0">
-                          Business Readiness
-                        </Form.Label>
-                      </Col>
-                      <Col md={6}>
-                        <Form.Control
-                          type="number"
-                          name="business_readiness"
-                          value={formData.business_readiness}
-                          onChange={handleChange}
-                        />
-                      </Col>
-                    </Row>
                     <Row className="mb-3">
                       <Col md={6} className="d-flex align-items-center">
                         <Form.Label className="fw-bold mb-0">
@@ -359,21 +425,6 @@ const AddLLM = () => {
                     </Row>
                   </Col>
                   <Col md={6}>
-                    <Row className="mb-3">
-                      <Col md={6} className="d-flex align-items-center">
-                        <Form.Label className="fw-bold mb-0">
-                          Perceived Business Value
-                        </Form.Label>
-                      </Col>
-                      <Col md={6}>
-                        <Form.Control
-                          type="number"
-                          name="perceived_business_value"
-                          value={formData.perceived_business_value}
-                          onChange={handleChange}
-                        />
-                      </Col>
-                    </Row>
                     <Row className="mb-3">
                       <Col md={6} className="d-flex align-items-center">
                         <Form.Label className="fw-bold mb-0">
@@ -490,8 +541,8 @@ const AddLLM = () => {
                     <Form.Control
                       type="text"
                       name="dependencies"
-                      value={formData.dependencies}
-                      onChange={handleChange}
+                      value={formData.dependencies.join(", ")}
+                      onChange={handleDependenciesChange}
                     />
                   </Col>
                 </Row>

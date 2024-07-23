@@ -40,7 +40,12 @@ export default class LLMService {
   //   return await LLM.findByIdAndUpdate(id, data, { new: true });
   // };
 
-  // deleteModel = async (id) => {
-  //   return await LLM.findByIdAndDelete(id);
-  // };
+  deleteModel = async (id) => {
+    try {
+      console.log(id);
+      return await LLM.findByIdAndDelete(id);
+    } catch (e) {
+      throw new Error(e);
+    }
+  };
 }
