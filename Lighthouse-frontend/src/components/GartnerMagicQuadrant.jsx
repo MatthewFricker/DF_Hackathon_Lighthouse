@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import * as d3 from "d3";
 import "./GartnerMagicQuadrant.css";
 import { getModels } from "../services/LLM.service.js";
+import { Container, Row, Col, Form, Spinner } from "react-bootstrap";
 
 const GartnerMagicQuadrant = () => {
   const [data, setData] = useState(null);
@@ -38,39 +39,65 @@ const GartnerMagicQuadrant = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <Container className="text-center mt-5">
+        <Spinner animation="border" role="status">
+          <span className="sr-only">Loading...</span>
+        </Spinner>
+      </Container>
+    );
   }
 
   if (!data) {
-    return <div>No data available</div>;
+    return (
+      <Container className="text-center mt-5">No data available</Container>
+    );
   }
 
   return (
-    <div className="container">
-      <h2>Lighthouse Magic Quadrant</h2>
-      <div>
-        <label htmlFor="valueType">Select Value Type: </label>
-        <select
-          id="valueType"
-          value={valueType}
-          onChange={handleValueTypeChange}
-        >
-          <option value="general">General</option>
-          <option value="personal">Personal</option>
-        </select>
-      </div>
-      <div>
-        <label htmlFor="industry">Select Industry: </label>
-        <select id="industry" value={industry} onChange={handleIndustryChange}>
-          <option value="default">Default</option>
-          <option value="banking">Banking</option>
-          <option value="healthcare">Healthcare</option>
-          <option value="legal">Legal</option>
-          <option value="telecommunication">Telecommunication</option>
-        </select>
-      </div>
-      <div id="magic-quadrant"></div>
-    </div>
+    <Container>
+      <Row className="mb-4">
+        <Col>
+          <h2>Lighthouse Magic Quadrant</h2>
+        </Col>
+      </Row>
+      <Row className="mb-3">
+        <Col md={6}>
+          <Form.Group controlId="valueType">
+            <Form.Label>Select Value Type:</Form.Label>
+            <Form.Control
+              as="select"
+              value={valueType}
+              onChange={handleValueTypeChange}
+            >
+              <option value="general">General</option>
+              <option value="personal">Personal</option>
+            </Form.Control>
+          </Form.Group>
+        </Col>
+        <Col md={6}>
+          <Form.Group controlId="industry">
+            <Form.Label>Select Industry:</Form.Label>
+            <Form.Control
+              as="select"
+              value={industry}
+              onChange={handleIndustryChange}
+            >
+              <option value="default">Default</option>
+              <option value="banking">Banking</option>
+              <option value="healthcare">Healthcare</option>
+              <option value="legal">Legal</option>
+              <option value="telecommunication">Telecommunication</option>
+            </Form.Control>
+          </Form.Group>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <div id="magic-quadrant"></div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
