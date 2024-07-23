@@ -2,13 +2,62 @@ import { useEffect, useState } from "react";
 import * as d3 from "d3";
 import "./GartnerMagicQuadrant.css";
 import { getModels } from "../services/LLM.service.js";
-import { Container, Row, Col, Form, Spinner } from "react-bootstrap";
+import { Container, Row, Col, Form, Spinner, Button } from "react-bootstrap";
+import AdminModal from "./AdminPanel.jsx";
+
+const defaultModifiers = {
+  default: {
+    businessReadiness: { capability: 1.0, safety: 1.0, performance: 1.0 },
+    perceivedBusinessValue: {
+      orgCred: 1.0,
+      knownSuccess: 1.0,
+      popularity: 1.0,
+    },
+  },
+  banking: {
+    businessReadiness: { capability: 0.8, safety: 1.2, performance: 1.0 },
+    perceivedBusinessValue: {
+      orgCred: 1.0,
+      knownSuccess: 1.0,
+      popularity: 0.8,
+    },
+  },
+  healthcare: {
+    businessReadiness: { capability: 0.7, safety: 1.5, performance: 0.8 },
+    perceivedBusinessValue: {
+      orgCred: 1.2,
+      knownSuccess: 1.0,
+      popularity: 0.6,
+    },
+  },
+  legal: {
+    businessReadiness: { capability: 0.5, safety: 1.5, performance: 0.7 },
+    perceivedBusinessValue: {
+      orgCred: 1.0,
+      knownSuccess: 0.8,
+      popularity: 0.5,
+    },
+  },
+  telecommunication: {
+    businessReadiness: { capability: 1.0, safety: 0.8, performance: 1.2 },
+    perceivedBusinessValue: {
+      orgCred: 0.9,
+      knownSuccess: 1.1,
+      popularity: 0.9,
+    },
+  },
+};
 
 const GartnerMagicQuadrant = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [valueType, setValueType] = useState("general");
   const [industry, setIndustry] = useState("default");
+  const [modifiers, setModifiers] = useState(() => {
+    const savedModifiers = localStorage.getItem("industryModifiers");
+    return savedModifiers ? JSON.parse(savedModifiers) : defaultModifiers;
+  });
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,9 +75,9 @@ const GartnerMagicQuadrant = () => {
 
   useEffect(() => {
     if (data) {
-      CreateGraph(data, valueType, industry);
+      CreateGraph(data, valueType, industry, modifiers);
     }
-  }, [data, valueType, industry]);
+  }, [data, valueType, industry, modifiers]);
 
   const handleValueTypeChange = (event) => {
     setValueType(event.target.value);
@@ -37,6 +86,11 @@ const GartnerMagicQuadrant = () => {
   const handleIndustryChange = (event) => {
     setIndustry(event.target.value);
   };
+
+  const isAdmin = localStorage.getItem("role") === "admin";
+
+  const handleShowModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
 
   if (loading) {
     return (
@@ -97,19 +151,24 @@ const GartnerMagicQuadrant = () => {
           <div id="magic-quadrant"></div>
         </Col>
       </Row>
+      {isAdmin && (
+        <>
+          <Button variant="primary" onClick={handleShowModal}>
+            Open Admin Panel
+          </Button>
+          <AdminModal
+            show={showModal}
+            handleClose={handleCloseModal}
+            modifiers={modifiers}
+            setModifiers={setModifiers}
+          />
+        </>
+      )}
     </Container>
   );
 };
 
-const industryModifiers = {
-  default: { businessReadiness: 1.0, perceivedBusinessValue: 1.0 },
-  banking: { businessReadiness: 0.6, perceivedBusinessValue: 0.7 },
-  healthcare: { businessReadiness: 0.7, perceivedBusinessValue: 0.6 },
-  legal: { businessReadiness: 0.5, perceivedBusinessValue: 0.5 },
-  telecommunication: { businessReadiness: 0.8, perceivedBusinessValue: 0.9 },
-};
-
-const CreateGraph = (data, valueType, industry) => {
+const CreateGraph = (data, valueType, industry, modifiers) => {
   const width = 600;
   const height = 600;
   const margin = { top: 50, right: 50, bottom: 50, left: 50 };
@@ -230,8 +289,53 @@ const CreateGraph = (data, valueType, industry) => {
   addLabel(2.5, 0.5, "Niche Players");
   addLabel(7.5, 0.5, "Emerging Opportunities");
 
-  // Apply industry-specific modifiers
-  const modifiers = industryModifiers[industry];
+  // Function to calculate business readiness and perceived business value
+  const calculateValues = (d, valueType) => {
+    let businessReadiness, perceivedBusinessValue;
+
+    if (valueType === "general") {
+      businessReadiness =
+        0.4 *
+          d.capabilities *
+          modifiers[industry].businessReadiness.capability +
+        0.35 * d.safety * modifiers[industry].businessReadiness.safety +
+        0.25 *
+          d.performance *
+          modifiers[industry].businessReadiness.performance;
+      perceivedBusinessValue =
+        0.4 *
+          d.org_credibility *
+          modifiers[industry].perceivedBusinessValue.orgCred +
+        0.4 *
+          d.known_successes *
+          modifiers[industry].perceivedBusinessValue.knownSuccess +
+        0.2 *
+          d.popularity *
+          modifiers[industry].perceivedBusinessValue.popularity;
+    } else {
+      businessReadiness =
+        0.5 *
+          d.capabilities *
+          modifiers[industry].businessReadiness.capability +
+        0.1 * d.safety * modifiers[industry].businessReadiness.safety +
+        0.4 * d.performance * modifiers[industry].businessReadiness.performance;
+      perceivedBusinessValue =
+        (1 / 3) *
+          d.org_credibility *
+          modifiers[industry].perceivedBusinessValue.orgCred +
+        (1 / 3) *
+          d.known_successes *
+          modifiers[industry].perceivedBusinessValue.knownSuccess +
+        (1 / 3) *
+          d.popularity *
+          modifiers[industry].perceivedBusinessValue.popularity;
+    }
+
+    return {
+      businessReadiness: Math.min(businessReadiness, 10),
+      perceivedBusinessValue: Math.min(perceivedBusinessValue, 10),
+    };
+  };
 
   // Add points
   svg
@@ -239,22 +343,9 @@ const CreateGraph = (data, valueType, industry) => {
     .data(data)
     .enter()
     .append("circle")
-    .attr("cx", (d) =>
-      xScale(
-        Math.min(
-          d[`business_readiness_${valueType}`] * modifiers.businessReadiness,
-          10
-        )
-      )
-    )
+    .attr("cx", (d) => xScale(calculateValues(d, valueType).businessReadiness))
     .attr("cy", (d) =>
-      yScale(
-        Math.min(
-          d[`perceived_business_value_${valueType}`] *
-            modifiers.perceivedBusinessValue,
-          10
-        )
-      )
+      yScale(calculateValues(d, valueType).perceivedBusinessValue)
     )
     .attr("r", 5)
     .attr("fill", "blue")
@@ -262,14 +353,10 @@ const CreateGraph = (data, valueType, industry) => {
     .on("mouseover", function (event, d) {
       d3.select(this).transition().attr("r", 7).attr("fill", "orange");
       tooltip.transition().style("opacity", 1);
+      const values = calculateValues(d, valueType);
       tooltip
         .html(
-          `Name: ${d.name}<br>Business Readiness: ${
-            d[`business_readiness_${valueType}`] * modifiers.businessReadiness
-          }<br>Perceived Business Value: ${
-            d[`perceived_business_value_${valueType}`] *
-            modifiers.perceivedBusinessValue
-          }`
+          `Name: ${d.name}<br>Business Readiness: ${values.businessReadiness}<br>Perceived Business Value: ${values.perceivedBusinessValue}`
         )
         .style("left", event.pageX + 5 + "px")
         .style("top", event.pageY - 28 + "px");
@@ -291,24 +378,11 @@ const CreateGraph = (data, valueType, industry) => {
     .attr("class", "label")
     .attr(
       "x",
-      (d) =>
-        xScale(
-          Math.min(
-            d[`business_readiness_${valueType}`] * modifiers.businessReadiness,
-            10
-          )
-        ) + 5
+      (d) => xScale(calculateValues(d, valueType).businessReadiness) + 5
     )
     .attr(
       "y",
-      (d) =>
-        yScale(
-          Math.min(
-            d[`perceived_business_value_${valueType}`] *
-              modifiers.perceivedBusinessValue,
-            10
-          )
-        ) - 5
+      (d) => yScale(calculateValues(d, valueType).perceivedBusinessValue) - 5
     )
     .text((d) => d.name);
 

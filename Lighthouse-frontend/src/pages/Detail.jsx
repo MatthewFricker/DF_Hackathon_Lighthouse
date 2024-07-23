@@ -102,24 +102,26 @@ const Detail = () => {
                     <tbody>
                       <tr>
                         <td style={{ width: "50%" }}>
-                          Performance: {llm.performance}
+                          Performance: {llm.performance.toFixed(2)}
                         </td>
                         <td style={{ width: "50%" }}>
-                          Popularity: {llm.popularity}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style={{ width: "50%" }}>Safety: {llm.safety}</td>
-                        <td style={{ width: "50%" }}>
-                          Known Successes: {llm.known_successes}
+                          Popularity: {llm.popularity.toFixed(2)}
                         </td>
                       </tr>
                       <tr>
                         <td style={{ width: "50%" }}>
-                          Capabilities: {llm.capabilities}
+                          Safety: {llm.safety.toFixed(2)}
                         </td>
                         <td style={{ width: "50%" }}>
-                          Org Credibility: {llm.org_credibility}
+                          Known Successes: {llm.known_successes.toFixed(2)}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style={{ width: "50%" }}>
+                          Capabilities: {llm.capabilities.toFixed(2)}
+                        </td>
+                        <td style={{ width: "50%" }}>
+                          Org Credibility: {llm.org_credibility.toFixed(2)}
                         </td>
                       </tr>
                     </tbody>
