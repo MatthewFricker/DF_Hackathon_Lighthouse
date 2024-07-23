@@ -57,14 +57,14 @@ export default class LLMController {
   //   }
   // };
 
-  // deleteModel = async (req, res) => {
-  //   try {
-  //     const id = req.params.id;
-  //     const model = await this.#LLMService.deleteModel(id);
-  //     res.status(200).send({ model });
-  //   } catch (error) {
-  //     res.status(400).send({ message: error.message });
-  //   }
-  // };
+  deleteModel = async (req, res) => {
+    try {
+      const id = req.body.id;
+      const model = await this.#LLMService.deleteModel(id);
+      res.status(200).send({ model });
+    } catch (error) {
+      res.status(400).send({ message: error.message });
+    }
+  };
 }
 

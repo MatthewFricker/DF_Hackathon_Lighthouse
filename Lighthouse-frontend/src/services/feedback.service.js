@@ -19,3 +19,12 @@ export const createFeedback = async (feedback) => {
     return error;
   }
 }
+
+export const deleteFeedback = async (id) => {
+  try {
+    const response = await axios.delete(`${URL}/feedback`, id);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+}

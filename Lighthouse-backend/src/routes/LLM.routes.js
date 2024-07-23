@@ -19,7 +19,7 @@ export default class LLMRoutes {
     this.#router.get("/:name", this.#controller.getModelByName);
     this.#router.post("/", this.#controller.createModel);
     // this.#router.put("/", this.#controller.updateModel);
-    // this.#router.delete("/", this.#controller.deleteModel);
+    this.#router.delete("/", this.#controller.deleteModel);
   };
 
   getRouter = () => {

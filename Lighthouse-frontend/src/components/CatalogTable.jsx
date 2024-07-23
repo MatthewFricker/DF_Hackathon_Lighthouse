@@ -1,17 +1,30 @@
 import { useState, useEffect } from "react";
-import { Table } from "react-bootstrap";
+import {
+  Table,
+  Form,
+  Row,
+  Col,
+  Container,
+  Button,
+  Collapse,
+  Card,
+} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { getModels } from "../services/LLM.service.js";
 
-// import data from "../assets/LLMData4.json";
-
 const CatalogTable = () => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sortConfig, setSortConfig] = useState({
     key: "name",
     direction: "ascending",
   });
+  const [filters, setFilters] = useState({
+    useCases: [],
+    modality: [],
+    access: [],
+  });
+  const [open, setOpen] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,7 +46,7 @@ const CatalogTable = () => {
     return <div>Loading...</div>;
   }
 
-  if (!data) {
+  if (!data.length) {
     return <div>No data available</div>;
   }
 
@@ -87,47 +100,167 @@ const CatalogTable = () => {
     navigate(`/model/${itemName}`);
   };
 
+  const handleFilterChange = (e, type) => {
+    const value = e.target.value;
+    setFilters((prev) => ({
+      ...prev,
+      [type]: prev[type].includes(value)
+        ? prev[type].filter((filter) => filter !== value)
+        : [...prev[type], value],
+    }));
+  };
+
+  const filteredData = sortedData.filter((item) => {
+    const useCasesFilter =
+      !filters.useCases.length ||
+      filters.useCases.every((filter) =>
+        item.use_cases_industries?.split(", ").includes(filter)
+      );
+    const modalityFilter =
+      !filters.modality.length ||
+      filters.modality.every((filter) =>
+        item.modality?.split(", ").includes(filter)
+      );
+    const accessFilter =
+      !filters.access.length || filters.access.includes(item.access);
+
+    return useCasesFilter && modalityFilter && accessFilter;
+  });
+
+  const allUseCases = Array.from(
+    new Set(
+      data.flatMap((item) =>
+        item.use_cases_industries ? item.use_cases_industries.split(", ") : []
+      )
+    )
+  );
+
+  const allModality = Array.from(
+    new Set(
+      data.flatMap((item) => (item.modality ? item.modality.split(", ") : []))
+    )
+  );
+
+  const allAccess = Array.from(new Set(data.map((item) => item.access)));
+
   return (
-    <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th onClick={() => requestSort("name")}>
-            Name {getClassNamesFor("name") === "ascending" ? "▲" : "▼"}
-          </th>
-          <th onClick={() => requestSort("organization")}>
-            Organization{" "}
-            {getClassNamesFor("organization") === "ascending" ? "▲" : "▼"}
-          </th>
-          <th>Description </th>
-          <th onClick={() => requestSort("created_date")}>
-            Created Date{" "}
-            {getClassNamesFor("created_date") === "ascending" ? "▲" : "▼"}
-          </th>
-          <th onClick={() => requestSort("modality")}>
-            Modality {getClassNamesFor("modality") === "ascending" ? "▲" : "▼"}
-          </th>
-          <th onClick={() => requestSort("access")}>
-            Access {getClassNamesFor("access") === "ascending" ? "▲" : "▼"}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {sortedData.map((item, index) => (
-          <tr
-            key={index}
-            onClick={() => handleRowClick(item.name)}
-            style={{ cursor: "pointer" }}
+    <Container fluid>
+      <Row>
+        <Col md={3} className="bg-light border-right">
+          <Button
+            onClick={() => setOpen(!open)}
+            aria-controls="example-collapse-text"
+            aria-expanded={open}
+            className="mt-3 w-100"
           >
-            <td>{item.name}</td>
-            <td>{item.organization}</td>
-            <td>{item.description}</td>
-            <td>{item.created_date}</td>
-            <td>{item.modality}</td>
-            <td>{item.access}</td>
-          </tr>
-        ))}
-      </tbody>
-    </Table>
+            {open ? "Hide Filters" : "Show Filters"}
+          </Button>
+          <Collapse in={open}>
+            <div id="example-collapse-text" className="p-3">
+              <Card className="mb-3">
+                <Card.Header>Use Cases/Industries</Card.Header>
+                <Card.Body>
+                  <Form>
+                    {allUseCases.map((useCase, index) => (
+                      <Form.Check
+                        key={index}
+                        type="checkbox"
+                        value={useCase}
+                        label={useCase}
+                        onChange={(e) => handleFilterChange(e, "useCases")}
+                      />
+                    ))}
+                  </Form>
+                </Card.Body>
+              </Card>
+              <Card className="mb-3">
+                <Card.Header>Modality</Card.Header>
+                <Card.Body>
+                  <Form>
+                    {allModality.map((modality, index) => (
+                      <Form.Check
+                        key={index}
+                        type="checkbox"
+                        value={modality}
+                        label={modality}
+                        onChange={(e) => handleFilterChange(e, "modality")}
+                      />
+                    ))}
+                  </Form>
+                </Card.Body>
+              </Card>
+              <Card className="mb-3">
+                <Card.Header>Access</Card.Header>
+                <Card.Body>
+                  <Form>
+                    {allAccess.map((access, index) => (
+                      <Form.Check
+                        key={index}
+                        type="checkbox"
+                        value={access}
+                        label={access}
+                        onChange={(e) => handleFilterChange(e, "access")}
+                      />
+                    ))}
+                  </Form>
+                </Card.Body>
+              </Card>
+            </div>
+          </Collapse>
+        </Col>
+        <Col md={open ? 9 : 12}>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th onClick={() => requestSort("name")}>
+                  Name {getClassNamesFor("name") === "ascending" ? "▲" : "▼"}
+                </th>
+                <th onClick={() => requestSort("organization")}>
+                  Organization{" "}
+                  {getClassNamesFor("organization") === "ascending" ? "▲" : "▼"}
+                </th>
+                <th>Description</th>
+                <th onClick={() => requestSort("created_date")}>
+                  Created Date{" "}
+                  {getClassNamesFor("created_date") === "ascending" ? "▲" : "▼"}
+                </th>
+                <th onClick={() => requestSort("modality")}>
+                  Modality{" "}
+                  {getClassNamesFor("modality") === "ascending" ? "▲" : "▼"}
+                </th>
+                <th onClick={() => requestSort("access")}>
+                  Access{" "}
+                  {getClassNamesFor("access") === "ascending" ? "▲" : "▼"}
+                </th>
+                <th onClick={() => requestSort("use_cases_industries")}>
+                  Use Cases/Industries{" "}
+                  {getClassNamesFor("use_cases_industries") === "ascending"
+                    ? "▲"
+                    : "▼"}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredData.map((item, index) => (
+                <tr
+                  key={index}
+                  onClick={() => handleRowClick(item.name)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <td>{item.name}</td>
+                  <td>{item.organization}</td>
+                  <td>{item.description}</td>
+                  <td>{item.created_date}</td>
+                  <td>{item.modality}</td>
+                  <td>{item.access}</td>
+                  <td>{item.use_cases_industries}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
