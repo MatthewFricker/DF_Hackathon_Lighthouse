@@ -44,52 +44,61 @@ const LeaveFeedback = () => {
   };
 
   return (
-    <Container className="mt-5">
-      <Row className="justify-content-md-center">
-        <Col md={6}>
-          <Card>
-            <Card.Header as="h3">Leave Feedback</Card.Header>
-            <Card.Body>
-              <Form onSubmit={handleSubmit}>
-                <Form.Group controlId="formRating" className="mb-3">
-                  <Row>
-                    <Col md={4} className="d-flex align-items-center">
-                      <Form.Label className="fw-bold mb-0">Rating</Form.Label>
-                    </Col>
-                    <Col md={8}>
-                      <div>{renderStars()}</div>
-                    </Col>
-                  </Row>
-                </Form.Group>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Container className="mt-5">
+        <Row className="justify-content-md-center">
+          <Col md={6}>
+            <Card>
+              <Card.Header as="h3">Leave Feedback</Card.Header>
+              <Card.Body>
+                <Form onSubmit={handleSubmit}>
+                  <Form.Group controlId="formRating" className="mb-3">
+                    <Row>
+                      <Col md={4} className="d-flex align-items-center">
+                        <Form.Label className="fw-bold mb-0">Rating</Form.Label>
+                      </Col>
+                      <Col md={8}>
+                        <div>{renderStars()}</div>
+                      </Col>
+                    </Row>
+                  </Form.Group>
 
-                <Form.Group controlId="formDescription" className="mb-3">
-                  <Row>
-                    <Col md={4} className="d-flex align-items-center">
-                      <Form.Label className="fw-bold mb-0">
-                        Description
-                      </Form.Label>
-                    </Col>
-                    <Col md={8}>
-                      <Form.Control
-                        as="textarea"
-                        rows={3}
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        required
-                      />
-                    </Col>
-                  </Row>
-                </Form.Group>
+                  <Form.Group controlId="formDescription" className="mb-3">
+                    <Row>
+                      <Col md={4} className="d-flex align-items-center">
+                        <Form.Label className="fw-bold mb-0">
+                          Description
+                        </Form.Label>
+                      </Col>
+                      <Col md={8}>
+                        <Form.Control
+                          as="textarea"
+                          rows={3}
+                          value={description}
+                          onChange={(e) => setDescription(e.target.value)}
+                          required
+                        />
+                      </Col>
+                    </Row>
+                  </Form.Group>
 
-                <Button variant="primary" type="submit" className="mt-3">
-                  Submit Feedback
-                </Button>
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+                  <Button variant="primary" type="submit" className="mt-3">
+                    Submit Feedback
+                  </Button>
+                </Form>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 };
 

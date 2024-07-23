@@ -133,15 +133,17 @@ const CatalogTable = () => {
         item.use_cases_industries ? item.use_cases_industries.split(", ") : []
       )
     )
-  );
+  ).sort((a, b) => a.localeCompare(b));
 
   const allModality = Array.from(
     new Set(
       data.flatMap((item) => (item.modality ? item.modality.split(", ") : []))
     )
-  );
+  ).sort((a, b) => a.localeCompare(b));
 
-  const allAccess = Array.from(new Set(data.map((item) => item.access)));
+  const allAccess = Array.from(new Set(data.map((item) => item.access))).sort(
+    (a, b) => a.localeCompare(b)
+  );
 
   return (
     <Container fluid>
@@ -224,20 +226,9 @@ const CatalogTable = () => {
                   Created Date{" "}
                   {getClassNamesFor("created_date") === "ascending" ? "▲" : "▼"}
                 </th>
-                <th onClick={() => requestSort("modality")}>
-                  Modality{" "}
-                  {getClassNamesFor("modality") === "ascending" ? "▲" : "▼"}
-                </th>
-                <th onClick={() => requestSort("access")}>
-                  Access{" "}
-                  {getClassNamesFor("access") === "ascending" ? "▲" : "▼"}
-                </th>
-                <th onClick={() => requestSort("use_cases_industries")}>
-                  Use Cases/Industries{" "}
-                  {getClassNamesFor("use_cases_industries") === "ascending"
-                    ? "▲"
-                    : "▼"}
-                </th>
+                <th>Modality</th>
+                <th>Access</th>
+                <th>Use Cases/Industries</th>
               </tr>
             </thead>
             <tbody>
