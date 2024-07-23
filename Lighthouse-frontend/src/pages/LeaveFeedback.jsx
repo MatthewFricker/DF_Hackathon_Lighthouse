@@ -3,13 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { Form, Button, Card, Container, Row, Col } from "react-bootstrap";
 
 import { createFeedback } from "../services/feedback.service.js";
+import { useUser } from "../services/UserContext";
 
 const LeaveFeedback = () => {
+  const { user } = useUser()
   const [rating, setRating] = useState(0);
   const [description, setDescription] = useState("");
 
   const navigate = useNavigate();
-  const userId = localStorage.getItem("userId");
+  const userId = user.id;
 
   const handleSubmit = async (event) => {
     event.preventDefault();

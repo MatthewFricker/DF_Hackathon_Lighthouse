@@ -8,7 +8,7 @@ export default class AuthService {
       const hashedPassword = await bcrypt.hash(password, 10);
       const user = new User({ email, username, password: hashedPassword });
       await user.save();
-      const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+      const accessToken = jwt.sign({ id: user._id, role:user.role }, process.env.JWT_SECRET);
       return { user, accessToken };
     } catch (error) {
       throw new Error("Registration failed", error.message);
@@ -21,7 +21,7 @@ export default class AuthService {
       if (!user) throw new Error("User not found");
       const validPassword = await bcrypt.compare(password, user.password);
       if (!validPassword) throw new Error("Invalid password");
-      const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+      const accessToken = jwt.sign({ id: user._id, role:user.role }, process.env.JWT_SECRET);
       return { user, accessToken };
     } catch (error) {
       throw new Error("Login failed", error.message);

@@ -4,6 +4,7 @@ import "./GartnerMagicQuadrant.css";
 import { getModels } from "../services/LLM.service.js";
 import { Container, Row, Col, Form, Spinner, Button } from "react-bootstrap";
 import AdminModal from "./AdminModal";
+import { useUser } from "../services/UserContext";
 
 
 const defaultModifiers = {
@@ -50,6 +51,7 @@ const defaultModifiers = {
 };
 
 const GartnerMagicQuadrant = () => {
+  const { user } = useUser();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [valueType, setValueType] = useState("general");
@@ -59,6 +61,8 @@ const GartnerMagicQuadrant = () => {
     return savedModifiers ? JSON.parse(savedModifiers) : defaultModifiers;
   });
   const [showModal, setShowModal] = useState(false);
+
+  console.log(user);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -88,7 +92,7 @@ const GartnerMagicQuadrant = () => {
     setIndustry(event.target.value);
   };
 
-  const isAdmin = localStorage.getItem("role") === "admin";
+  const isAdmin = user?.role === "admin";
 
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);

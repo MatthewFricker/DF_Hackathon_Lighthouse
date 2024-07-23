@@ -5,9 +5,11 @@ import Form from "react-bootstrap/Form";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useNavigate } from "react-router-dom";
 import { getModels } from "../services/LLM.service.js";
+import { useUser } from "../services/UserContext";
 
 function NavBar() {
   const navigate = useNavigate();
+  const { user, setUser } = useUser();
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState([]);
@@ -24,11 +26,10 @@ function NavBar() {
     fetchData();
   }, []);
 
-
   useEffect(() => {
     if (searchQuery) {
       const lowerCaseQuery = searchQuery.toLowerCase();
-  
+
       const uniqueMatches = new Map();
       data.forEach((item) => {
         let matchSource = null;
@@ -37,12 +38,12 @@ function NavBar() {
         } else if (item.organization.toLowerCase().includes(lowerCaseQuery)) {
           matchSource = "organization";
         }
-  
+
         if (matchSource && !uniqueMatches.has(item.id)) {
           uniqueMatches.set(item.id, { ...item, matchSource });
         }
       });
-  
+
       setFilteredData(Array.from(uniqueMatches.values()));
     } else {
       setFilteredData([]);
@@ -51,7 +52,8 @@ function NavBar() {
 
   const handleLogout = () => {
     localStorage.clear();
-    // setIsLoggedIn(false);
+    setUser(null);
+    navigate("/");
   };
 
   const handleSelect = (model) => {
@@ -66,7 +68,7 @@ function NavBar() {
         <Nav className="me-auto">
           <Nav.Link href="/">Home</Nav.Link>
           <Nav.Link href="/catalog">Catalog</Nav.Link>
-          {localStorage.getItem("user") ? (
+          {user ? (
             <>
               <Nav.Link href="/feedback">Feedback</Nav.Link>
               <Nav.Link onClick={handleLogout} href="/">
@@ -77,9 +79,9 @@ function NavBar() {
             <Nav.Link href="/login">Login</Nav.Link>
           )}
         </Nav>
-        {localStorage.getItem("role") === "admin" && (
+        {user?.role === "admin" && (
           <Nav className="admin-tools">
-            <Nav.Link href="/addLMM">Add LMM</Nav.Link>
+            <Nav.Link href="/addLLM">Add LLM</Nav.Link>
             <Nav.Link href="/viewFeedback">View Feedback</Nav.Link>
           </Nav>
         )}

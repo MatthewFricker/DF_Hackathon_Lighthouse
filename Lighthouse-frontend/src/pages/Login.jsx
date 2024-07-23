@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import { Container, Card, Form, Button, Toast } from "react-bootstrap";
-
+import { useUser } from "../services/UserContext";
 import { login } from "../services/auth.service.js";
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
+  const { setUser } = useUser();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [showToast, setShowToast] = useState(false); // State to control Toast visibility
+  const [showToast, setShowToast] = useState(false);
 
   const navigate = useNavigate();
 
@@ -17,13 +19,10 @@ const Login = () => {
     event.preventDefault();
     try {
       const data = await login(username, password);
-      console.log(data.user);
-      localStorage.setItem("user", data.user.user.username);
-      localStorage.setItem("userId", data.user.user._id);
-      localStorage.setItem("role", data.user.user.role);
+      const decodedToken = jwtDecode(data.user.accessToken);
       localStorage.setItem("accessToken", data.user.accessToken);
+      setUser(decodedToken);
       setShowToast(true);
-      console.log("Login successful!");
       setTimeout(() => {
         setShowToast(false);
         navigate("/");
@@ -82,10 +81,10 @@ const Login = () => {
           delay={3000}
           autohide
           style={{
-            position: "absolute", // Position toast absolutely
-            bottom: "5rem", // Distance from bottom
-            left: "50%", // Center horizontally
-            transform: "translateX(-50%)", // Adjust for exact centering
+            position: "absolute",
+            bottom: "5rem",
+            left: "50%",
+            transform: "translateX(-50%)",
           }}
         >
           <Toast.Header>

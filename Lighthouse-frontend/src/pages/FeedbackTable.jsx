@@ -3,6 +3,7 @@ import { Table, Form, Button } from "react-bootstrap";
 import "./FeedbackTable.css";
 
 import { getFeedback, deleteFeedback } from "../services/feedback.service.js";
+import { useUser } from "../services/UserContext";
 
 const FeedbackTable = () => {
   const [data, setData] = useState(null);
@@ -12,6 +13,7 @@ const FeedbackTable = () => {
     direction: "ascending",
   });
   const [selectedRatings, setSelectedRatings] = useState([]);
+  const { user } = useUser();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -89,6 +91,10 @@ const FeedbackTable = () => {
     }
     return sortConfig.direction;
   };
+
+  if (user?.role !== "admin") {
+    return <Navigate to="/noaccess" replace />;
+  }
 
   return (
     <div className="p-4">
