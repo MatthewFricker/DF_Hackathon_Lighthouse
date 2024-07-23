@@ -64,14 +64,14 @@ const GartnerMagicQuadrant = () => {
       <Row className="mb-3">
         <Col md={6}>
           <Form.Group controlId="valueType">
-            <Form.Label>Select Value Type:</Form.Label>
+            <Form.Label>Select Use Type:</Form.Label>
             <Form.Control
               as="select"
               value={valueType}
               onChange={handleValueTypeChange}
             >
-              <option value="general">General</option>
-              <option value="personal">Personal</option>
+              <option value="general">Business</option>
+              <option value="personal">Employee</option>
             </Form.Control>
           </Form.Group>
         </Col>

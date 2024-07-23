@@ -59,7 +59,7 @@ export default class LLMController {
 
   deleteModel = async (req, res) => {
     try {
-      const id = req.body.id;
+      const { id } = req.body.id;
       const model = await this.#LLMService.deleteModel(id);
       res.status(200).send({ model });
     } catch (error) {

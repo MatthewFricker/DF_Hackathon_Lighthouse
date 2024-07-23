@@ -116,10 +116,10 @@ const Detail = () => {
                       </tr>
                       <tr>
                         <td style={{ width: "50%" }}>
-                          Org Credibility: {llm.org_credibility}
+                          Capabilities: {llm.capabilities}
                         </td>
                         <td style={{ width: "50%" }}>
-                          Capabilities: {llm.capabilities}
+                          Org Credibility: {llm.org_credibility}
                         </td>
                       </tr>
                     </tbody>

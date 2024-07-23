@@ -42,7 +42,6 @@ export default class LLMService {
 
   deleteModel = async (id) => {
     try {
-      console.log(id);
       return await LLM.findByIdAndDelete(id);
     } catch (e) {
       throw new Error(e);

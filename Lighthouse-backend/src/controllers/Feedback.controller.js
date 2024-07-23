@@ -28,7 +28,7 @@ export default class FeedbackController {
 
   deleteFeedback = async (req, res) => {
     try {
-      const id = req.body.id;
+      const { id } = req.body.id;
       const feedback = await this.#feedbackService.deleteFeedback(id);
       res.status(200).send({ feedback });
     } catch (error) {
