@@ -3,7 +3,7 @@ import * as d3 from "d3";
 import "./GartnerMagicQuadrant.css";
 import { getModels } from "../services/LLM.service.js";
 import { Container, Row, Col, Form, Spinner, Button } from "react-bootstrap";
-import AdminModal from "./AdminPanel.jsx";
+import AdminModal from "./AdminModal";
 
 const defaultModifiers = {
   default: {
@@ -356,7 +356,13 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
       const values = calculateValues(d, valueType);
       tooltip
         .html(
-          `Name: ${d.name}<br>Business Readiness: ${values.businessReadiness}<br>Perceived Business Value: ${values.perceivedBusinessValue}`
+          `Name: ${
+            d.name
+          }<br>Business Readiness: ${values.businessReadiness.toFixed(
+            2
+          )}<br>Perceived Business Value: ${values.perceivedBusinessValue.toFixed(
+            2
+          )}`
         )
         .style("left", event.pageX + 5 + "px")
         .style("top", event.pageY - 28 + "px");
