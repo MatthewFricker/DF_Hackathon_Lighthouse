@@ -36,6 +36,12 @@ const AdminModal = ({ show, handleClose, modifiers, setModifiers }) => {
     setLocalModifiers(defaultModifiers);
   };
 
+  const formatFieldName = (fieldName) => {
+    return fieldName
+      .replace(/([A-Z])/g, " $1")
+      .replace(/^./, (str) => str.toUpperCase());
+  };
+
   return (
     <Modal show={show} onHide={handleClose} size="lg">
       <Modal.Header closeButton>
@@ -56,16 +62,13 @@ const AdminModal = ({ show, handleClose, modifiers, setModifiers }) => {
                     {["businessReadiness", "perceivedBusinessValue"].map(
                       (type) => (
                         <div key={type}>
-                          <h5>
-                            {type.charAt(0).toUpperCase() + type.slice(1)}
-                          </h5>
+                          <h5>{formatFieldName(type)}</h5>
                           {Object.keys(localModifiers[industry][type]).map(
                             (field) => (
                               <Row key={field} className="mb-3">
                                 <Col md={4}>
                                   <Form.Label>
-                                    {field.charAt(0).toUpperCase() +
-                                      field.slice(1)}
+                                    {formatFieldName(field)}
                                   </Form.Label>
                                 </Col>
                                 <Col md={8}>
