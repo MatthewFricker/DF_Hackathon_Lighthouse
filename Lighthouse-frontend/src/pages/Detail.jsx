@@ -135,6 +135,7 @@ const Detail = () => {
                     </a>
                   )
                 )}
+                {renderField("Use Cases Industries", llm.use_cases_industries)}
                 {renderField("Datasheet", llm.datasheet)}
                 {renderField("Modality", llm.modality)}
                 {renderField("Size", llm.size)}
