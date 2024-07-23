@@ -4,6 +4,8 @@ import "./GartnerMagicQuadrant.css";
 import { getModels } from "../services/LLM.service.js";
 import { Container, Row, Col, Form, Spinner, Button } from "react-bootstrap";
 import AdminModal from "./AdminModal";
+import { useUser } from "../services/UserContext";
+
 
 const defaultModifiers = {
   default: {
@@ -15,40 +17,41 @@ const defaultModifiers = {
     },
   },
   banking: {
-    businessReadiness: { capability: 0.8, safety: 1.2, performance: 1.0 },
+    businessReadiness: { capability: 0.7, safety: 1.8, performance: 0.9 },
     perceivedBusinessValue: {
-      orgCred: 1.0,
+      orgCred: 1.2,
       knownSuccess: 1.0,
       popularity: 0.8,
     },
   },
   healthcare: {
-    businessReadiness: { capability: 0.7, safety: 1.5, performance: 0.8 },
+    businessReadiness: { capability: 0.6, safety: 2.2, performance: 0.7 },
     perceivedBusinessValue: {
-      orgCred: 1.2,
-      knownSuccess: 1.0,
+      orgCred: 1.3,
+      knownSuccess: 1.1,
       popularity: 0.6,
     },
   },
   legal: {
-    businessReadiness: { capability: 0.5, safety: 1.5, performance: 0.7 },
+    businessReadiness: { capability: 0.5, safety: 2.5, performance: 0.6 },
     perceivedBusinessValue: {
-      orgCred: 1.0,
-      knownSuccess: 0.8,
+      orgCred: 1.1,
+      knownSuccess: 0.9,
       popularity: 0.5,
     },
   },
   telecommunication: {
-    businessReadiness: { capability: 1.0, safety: 0.8, performance: 1.2 },
+    businessReadiness: { capability: 1.1, safety: 1.0, performance: 1.2 },
     perceivedBusinessValue: {
-      orgCred: 0.9,
+      orgCred: 1.0,
       knownSuccess: 1.1,
-      popularity: 0.9,
+      popularity: 1.0,
     },
   },
 };
 
 const GartnerMagicQuadrant = () => {
+  const { user } = useUser();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [valueType, setValueType] = useState("general");
@@ -58,6 +61,8 @@ const GartnerMagicQuadrant = () => {
     return savedModifiers ? JSON.parse(savedModifiers) : defaultModifiers;
   });
   const [showModal, setShowModal] = useState(false);
+
+  console.log(user);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -87,7 +92,7 @@ const GartnerMagicQuadrant = () => {
     setIndustry(event.target.value);
   };
 
-  const isAdmin = localStorage.getItem("role") === "admin";
+  const isAdmin = user?.role === "admin";
 
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);

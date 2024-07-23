@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import { Form, Button, Col, Row, Container, Card } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { createModel } from "../services/LLM.service";
+import { useUser } from "../services/UserContext";
 
 const formatDate = (date) => {
   if (!date) return "";
@@ -21,6 +22,7 @@ const parseDate = (dateString) => {
 };
 
 const AddLLM = () => {
+  const { user } = useUser();
   const [formData, setFormData] = useState({
     type: "",
     name: "",
@@ -149,6 +151,10 @@ const AddLLM = () => {
       console.error(error);
     }
   };
+
+  if (user?.role !== "admin") {
+    return <Navigate to="/noaccess" replace />;
+  }
 
   return (
     <div

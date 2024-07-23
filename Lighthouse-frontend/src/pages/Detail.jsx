@@ -11,13 +11,14 @@ import {
 import { useState, useEffect } from "react";
 
 import { getModels, deleteModel } from "../services/LLM.service.js";
+import { useUser } from "../services/UserContext";
 
 const Detail = () => {
+  const { user } = useUser();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const { name } = useParams();
-  const role = localStorage.getItem("role");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -168,7 +169,7 @@ const Detail = () => {
                   </Button>
                 </Link>
 
-                {role === "admin" && (
+                {user?.role === "admin" && (
                   <div className="d-flex align-items-center mt-3">
                     <Form.Check
                       type="checkbox"

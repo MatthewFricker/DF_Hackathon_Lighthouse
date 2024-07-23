@@ -1,0 +1,38 @@
+Banking: Banking industry has high safety requirements due to regulatory compliance and sensitive financial data. Capability might be slightly lower due to conservative adoption of new technologies.
+Healthcare: The healthcare industry requires extremely high safety due to patient data protection and regulatory compliance. Capability and performance might be lower due to integration challenges with existing systems.
+Legal: Legal industry places high importance on safety and compliance. Capability might be lower due to the complexity of legal language and the need for precise accuracy.
+Telecommunication: The telecommunication industry is more open to adopting new technologies and has moderate safety requirements. Performance and capability are higher due to the need for handling large volumes of data efficiently.
+
+Rationale
+Banking:
+
+Capability: 0.7 (Banks often adopt new technology cautiously due to regulatory constraints and risk aversion)
+Safety: 1.8 (Very high due to strict regulations and the need for data protection)
+Performance: 0.9 (Moderately high, banks require reliable systems but may not always need cutting-edge performance)
+OrgCred: 1.2 (High trust in established financial institutions)
+KnownSuccess: 1.0 (Banks have standard adoption and success rates for new technologies)
+Popularity: 0.8 (Moderate popularity due to a conservative approach to new tech)
+Healthcare:
+
+Capability: 0.6 (Integration challenges with existing systems and regulations)
+Safety: 2.2 (Extremely high due to patient data protection and regulatory compliance)
+Performance: 0.7 (Lower due to integration and real-time data processing needs)
+OrgCred: 1.3 (High trust in healthcare providers)
+KnownSuccess: 1.1 (Critical applications often have higher success rates)
+Popularity: 0.6 (Lower adoption rate due to complexity and regulatory hurdles)
+Legal:
+
+Capability: 0.5 (Complexity of legal language and the need for precise accuracy)
+Safety: 2.5 (Very high due to legal compliance and sensitive data)
+Performance: 0.6 (Moderate performance needs, focus on accuracy over speed)
+OrgCred: 1.1 (High trust in established legal firms)
+KnownSuccess: 0.9 (Standard success rates)
+Popularity: 0.5 (Lower adoption due to the conservative nature of the industry)
+Telecommunication:
+
+Capability: 1.1 (High capability to handle large data volumes and complex networks)
+Safety: 1.0 (Moderate safety requirements, data privacy is important but less regulated)
+Performance: 1.2 (High performance needs for real-time data processing and high traffic)
+OrgCred: 1.0 (Standard credibility)
+KnownSuccess: 1.1 (Higher due to faster adoption of new technologies)
+Popularity: 1.0 (Higher popularity due to innovation and user demand)
