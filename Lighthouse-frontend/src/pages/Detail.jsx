@@ -12,7 +12,10 @@ import { useState, useEffect } from "react";
 
 import { getModels, deleteModel } from "../services/LLM.service.js";
 import { useUser } from "../services/UserContext";
-import BarChart from "../components/BarChart"; 
+import MethodologyModal from "../components/MethodologyModal";
+
+// import BarChart from "../components/BarChart";
+
 const Detail = () => {
   const { user } = useUser();
   const [data, setData] = useState(null);
@@ -20,6 +23,10 @@ const Detail = () => {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const { name } = useParams();
   const navigate = useNavigate();
+
+  const [showMethodologyModal, setShowMethodologyModal] = useState(false);
+  const handleMethodologyClose = () => setShowMethodologyModal(false);
+  const handleMethodologyShow = () => setShowMethodologyModal(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,7 +45,6 @@ const Detail = () => {
   const handleDelete = async (id) => {
     if (confirmDelete) {
       try {
-        console.log(id);
         await deleteModel({ id });
         navigate("/catalog");
       } catch (error) {
@@ -122,9 +128,7 @@ const Detail = () => {
                         </td>
                       </tr>
                       <tr>
-                        <td style={{ width: "50%" }}>
-                          Safety: {llm.safety}
-                        </td>
+                        <td style={{ width: "50%" }}>Safety: {llm.safety}</td>
                         <td
                           style={{ width: "50%", backgroundColor: "#CD6675" }}
                         >
@@ -144,6 +148,16 @@ const Detail = () => {
                     </tbody>
                   </Table>
                 </div>
+                <Button
+                  className="custom-button mb-2"
+                  onClick={handleMethodologyShow}
+                >
+                  See Methodology
+                </Button>
+                <MethodologyModal
+                  showModal={showMethodologyModal}
+                  handleClose={handleMethodologyClose}
+                />
                 {renderField("Description", llm.description)}
                 {renderField("Created Date", llm.created_date)}
                 {renderField(

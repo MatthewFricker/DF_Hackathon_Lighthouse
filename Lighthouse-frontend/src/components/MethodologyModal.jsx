@@ -1,6 +1,6 @@
 import { Modal, Button } from "react-bootstrap";
 
-const ScoreMethodologyModal = ({ showModal, handleClose }) => {
+const MethodologyModal = ({ showModal, handleClose }) => {
   return (
     <Modal size="lg" show={showModal} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -88,4 +88,4 @@ const ScoreMethodologyModal = ({ showModal, handleClose }) => {
   );
 };
 
-export default ScoreMethodologyModal;
+export default MethodologyModal;

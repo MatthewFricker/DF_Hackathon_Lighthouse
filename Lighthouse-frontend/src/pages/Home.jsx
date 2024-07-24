@@ -3,7 +3,7 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import MagicQuadrant from "../components/MagicQuadrant";
 import FormulaModal from "../components/FormulaModal";
-import ScoreMethodologyModal from "../components/ScoreMethodologyModal";
+import MethodologyModal from "../components/MethodologyModal";
 import QuadrantFilters from "../components/QuadrantFilters";
 
 const Home = () => {
@@ -65,7 +65,7 @@ const Home = () => {
             </div>
           </Col>
         </Row>
-        <ScoreMethodologyModal
+        <MethodologyModal
           showModal={showMethodologyModal}
           handleClose={handleMethodologyClose}
         />
