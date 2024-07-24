@@ -48,7 +48,11 @@ const Detail = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <>
+        <img src="icons8-lighthouse.gif" alt="loading" />
+      </>
+    );
   }
 
   if (!data) {
