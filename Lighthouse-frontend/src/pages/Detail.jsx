@@ -12,7 +12,7 @@ import { useState, useEffect } from "react";
 
 import { getModels, deleteModel } from "../services/LLM.service.js";
 import { useUser } from "../services/UserContext";
-
+import BarChart from "../components/BarChart"; 
 const Detail = () => {
   const { user } = useUser();
   const [data, setData] = useState(null);
@@ -83,13 +83,12 @@ const Detail = () => {
         <Row className="mt-5 justify-content-center">
           <Col>
             <Card className="shadow-sm">
-              <Card.Header as="h3"
-                style={{ backgroundColor: "#CD6675"}}
-              >
+              <Card.Header as="h3" style={{ backgroundColor: "#CD6675" }}>
                 {llm.name}
               </Card.Header>
               <Card.Body>
                 <Card.Title>{llm.organization}</Card.Title>
+                {/* <BarChart data={llm} /> */}
                 <div className="d-flex justify-content-center">
                   <Table size="sm" bordered striped="columns">
                     <thead>
@@ -109,32 +108,32 @@ const Detail = () => {
                     <tbody>
                       <tr>
                         <td style={{ width: "50%" }}>
-                          Performance: {llm.performance.toFixed(2)}
+                          Performance: {llm.performance}
                         </td>
                         <td
                           style={{ width: "50%", backgroundColor: "#CD6675" }}
                         >
-                          Popularity: {llm.popularity.toFixed(2)}
+                          Popularity: {llm.popularity}
                         </td>
                       </tr>
                       <tr>
                         <td style={{ width: "50%" }}>
-                          Safety: {llm.safety.toFixed(2)}
+                          Safety: {llm.safety}
                         </td>
                         <td
                           style={{ width: "50%", backgroundColor: "#CD6675" }}
                         >
-                          Known Successes: {llm.known_successes.toFixed(2)}
+                          Known Successes: {llm.known_successes}
                         </td>
                       </tr>
                       <tr>
                         <td style={{ width: "50%" }}>
-                          Capabilities: {llm.capabilities.toFixed(2)}
+                          Capabilities: {llm.capabilities}
                         </td>
                         <td
                           style={{ width: "50%", backgroundColor: "#CD6675" }}
                         >
-                          Org Credibility: {llm.org_credibility.toFixed(2)}
+                          Org Credibility: {llm.org_credibility}
                         </td>
                       </tr>
                     </tbody>
@@ -174,13 +173,11 @@ const Detail = () => {
                 {renderField("Failures", llm.failures)}
                 {renderField("Lawsuits", llm.lawsuits)}
                 {renderField("Lawsuit Information", llm.lawsuit_inf)}
-
                 <Link to="/catalog">
                   <Button className="mt-3 custom-button">
                     Back to Catalog
                   </Button>
                 </Link>
-
                 {user?.role === "admin" && (
                   <div className="d-flex align-items-center mt-3">
                     <Form.Check
