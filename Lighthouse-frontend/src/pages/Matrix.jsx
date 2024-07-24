@@ -27,9 +27,9 @@ const Matrix = () => {
       <h1 className="text-center mt-3">
         Compare the most popular Large Language Models (LLM)
       </h1>
-      <Container>
+      <Container style={{ marginLeft: "10rem" }}>
         <Row className="justify-content-center">
-          <Col md={8}>
+          <Col md={8} className="mb-4 mb-md-0">
             <MagicQuadrant valueType={valueType} industry={industry} />
           </Col>
           <Col
