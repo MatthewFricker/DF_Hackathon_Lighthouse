@@ -3,7 +3,6 @@ import { Container, Row, Col, Spinner, Button } from "react-bootstrap";
 import { getModels } from "../services/LLM.service.js";
 import AdminModal from "./AdminModal";
 import { useUser } from "../services/UserContext";
-import QuadrantFilters from "./QuadrantFilters";
 import Graph from "./Graph";
 
 const defaultModifiers = {
@@ -49,12 +48,10 @@ const defaultModifiers = {
   },
 };
 
-const MagicQuadrant = () => {
+const MagicQuadrant = ({ valueType, industry }) => {
   const { user } = useUser();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [valueType, setValueType] = useState("general");
-  const [industry, setIndustry] = useState("default");
   const [modifiers, setModifiers] = useState(() => {
     const savedModifiers = localStorage.getItem("industryModifiers");
     return savedModifiers ? JSON.parse(savedModifiers) : defaultModifiers;
@@ -74,9 +71,6 @@ const MagicQuadrant = () => {
     };
     fetchData();
   }, []);
-
-  const handleValueTypeChange = (value) => setValueType(value);
-  const handleIndustryChange = (value) => setIndustry(value);
 
   const isAdmin = user?.role === "admin";
 
@@ -101,17 +95,6 @@ const MagicQuadrant = () => {
 
   return (
     <Container>
-      <Row className="mb-4">
-        <Col>
-          <h2>Lighthouse Magic Quadrant</h2>
-        </Col>
-      </Row>
-      <QuadrantFilters
-        valueType={valueType}
-        industry={industry}
-        handleValueTypeChange={handleValueTypeChange}
-        handleIndustryChange={handleIndustryChange}
-      />
       <Row>
         <Col>
           <Graph
@@ -124,7 +107,7 @@ const MagicQuadrant = () => {
       </Row>
       {isAdmin && (
         <>
-          <Button variant="primary" onClick={handleShowModal}>
+          <Button className="custom-button" onClick={handleShowModal}>
             Open Admin Panel
           </Button>
           <AdminModal

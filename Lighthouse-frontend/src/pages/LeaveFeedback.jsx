@@ -54,14 +54,11 @@ const LeaveFeedback = () => {
         alignItems: "center",
       }}
     >
-      <Container className="mt-5">
+      <Container className="mt-5 pt-5">
         <Row className="justify-content-md-center">
           <Col md={6}>
             <Card>
-              <Card.Header
-                as="h3"
-                style={{ backgroundColor: "#CD6675" }}
-              >
+              <Card.Header as="h3" style={{ backgroundColor: "#CD6675" }}>
                 Leave Feedback
               </Card.Header>
               <Card.Body>
@@ -96,7 +93,10 @@ const LeaveFeedback = () => {
                     </Row>
                   </Form.Group>
 
-                  <Button variant="primary" type="submit" className="mt-3">
+                  <Button
+                    type="submit"
+                    className="mt-3 custom-button"
+                  >
                     Submit Feedback
                   </Button>
                 </Form>

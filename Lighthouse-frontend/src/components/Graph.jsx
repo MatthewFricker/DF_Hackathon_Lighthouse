@@ -28,13 +28,25 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
   const xScale = d3.scaleLinear().domain([0, 10]).range([0, width]);
   const yScale = d3.scaleLinear().domain([0, 10]).range([height, 0]);
 
+  // Add the title
+  svg
+    .append("text")
+    .attr("x", width / 2)
+    .attr("y", -30)
+    .attr("text-anchor", "middle")
+    .attr("font-size", "20px")
+    .attr("fill", "#333")
+    .text("Perceived Business Value vs Business Readiness");
+
+  // Add the quadrant lines
+  // Add the quadrant lines
   svg
     .append("rect")
     .attr("x", width / 2)
     .attr("y", 0)
     .attr("width", width / 2)
     .attr("height", height / 2)
-    .attr("fill", "lightblue")
+    .attr("fill", "#A51C30") // red
     .attr("opacity", 0.3);
 
   svg
@@ -43,7 +55,7 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
     .attr("y", 0)
     .attr("width", width / 2)
     .attr("height", height / 2)
-    .attr("fill", "lightgreen")
+    .attr("fill", "#CD5C5C") // lighter red for contrast
     .attr("opacity", 0.3);
 
   svg
@@ -52,7 +64,7 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
     .attr("y", height / 2)
     .attr("width", width / 2)
     .attr("height", height / 2)
-    .attr("fill", "lightyellow")
+    .attr("fill", "#D3D3D3") // light gray
     .attr("opacity", 0.3);
 
   svg
@@ -61,7 +73,7 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
     .attr("y", height / 2)
     .attr("width", width / 2)
     .attr("height", height / 2)
-    .attr("fill", "lightcoral")
+    .attr("fill", "#949eb0") // gray
     .attr("opacity", 0.3);
 
   svg
