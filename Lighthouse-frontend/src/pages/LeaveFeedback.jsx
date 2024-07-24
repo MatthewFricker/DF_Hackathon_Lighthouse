@@ -54,7 +54,7 @@ const LeaveFeedback = () => {
         alignItems: "center",
       }}
     >
-      <Container className="mt-5">
+      <Container className="mt-5 pt-5">
         <Row className="justify-content-md-center">
           <Col md={6}>
             <Card>
