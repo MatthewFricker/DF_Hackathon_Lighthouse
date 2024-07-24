@@ -47,6 +47,7 @@ const Catalog = () => {
     return (
       <>
         <img src="icons8-lighthouse.gif" alt="loading" />
+        Loading...
       </>
     );
   }

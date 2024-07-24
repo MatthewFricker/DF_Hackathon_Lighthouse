@@ -207,7 +207,9 @@ const AddLLM = () => {
             <Form onSubmit={handleSubmit}>
               {/* Required Fields */}
               <Card className="mb-4">
-                <Card.Header as="h3">Required Fields</Card.Header>
+                <Card.Header as="h3" style={{ backgroundColor: "#CD6675" }}>
+                  Required Fields
+                </Card.Header>
                 <Card.Body>
                   <Row className="mb-3">
                     <Col md={4} className="d-flex align-items-center">
@@ -520,7 +522,9 @@ const AddLLM = () => {
 
               {/* Numbered Fields */}
               <Card className="mb-4">
-                <Card.Header as="h3">Scoring</Card.Header>
+                <Card.Header as="h3" style={{ backgroundColor: "#CD6675" }}>
+                  Scoring
+                </Card.Header>
                 <Card.Body>
                   <Row>
                     <Col md={6}>
@@ -623,7 +627,9 @@ const AddLLM = () => {
 
               {/* Other Fields */}
               <Card className="mb-4">
-                <Card.Header as="h3">Other Fields</Card.Header>
+                <Card.Header as="h3" style={{ backgroundColor: "#CD6675" }}>
+                  Other Fields
+                </Card.Header>
                 <Card.Body>
                   <Row className="mb-3">
                     <Col md={4} className="d-flex align-items-center">

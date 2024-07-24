@@ -2,14 +2,19 @@ import { useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import MagicQuadrant from "../components/MagicQuadrant";
+import FormulaModal from "../components/FormulaModal";
 import ScoreMethodologyModal from "../components/ScoreMethodologyModal";
 import QuadrantFilters from "../components/QuadrantFilters";
 
 const Home = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [showMethodologyModal, setShowMethodologyModal] = useState(false);
+  const [showFormulaModal, setShowFormulaModal] = useState(false);
 
-  const handleClose = () => setShowModal(false);
-  const handleShow = () => setShowModal(true);
+  const handleMethodologyClose = () => setShowMethodologyModal(false);
+  const handleMethodologyShow = () => setShowMethodologyModal(true);
+
+  const handleFormulaClose = () => setShowFormulaModal(false);
+  const handleFormulaShow = () => setShowFormulaModal(true);
 
   const [valueType, setValueType] = useState("general");
   const [industry, setIndustry] = useState("default");
@@ -38,22 +43,35 @@ const Home = () => {
                 handleValueTypeChange={handleValueTypeChange}
                 handleIndustryChange={handleIndustryChange}
               />
-              <div className="mt-4">
-                <p className="text-center">
-                  <br />
-                  <br />
-                  Click below to see our score calculation methodology
+              <div className="mt-5 pt-5 text-center">
+                <p>
+                  Click below to see our score calculation methodology or
+                  weightings
                 </p>
-                <Button className="custom-button mt-2" onClick={handleShow}>
+                <Button
+                  className="custom-button mt-2"
+                  onClick={handleMethodologyShow}
+                >
                   Methodology
+                </Button>
+                <br />
+                <Button
+                  className="custom-button mt-2"
+                  onClick={handleFormulaShow}
+                >
+                  Weighting
                 </Button>
               </div>
             </div>
           </Col>
         </Row>
         <ScoreMethodologyModal
-          showModal={showModal}
-          handleClose={handleClose}
+          showModal={showMethodologyModal}
+          handleClose={handleMethodologyClose}
+        />
+        <FormulaModal
+          showModal={showFormulaModal}
+          handleClose={handleFormulaClose}
         />
       </Container>
       <div className="text-center mt-4">
