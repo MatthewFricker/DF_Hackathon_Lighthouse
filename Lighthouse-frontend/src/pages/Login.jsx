@@ -66,7 +66,11 @@ const Login = () => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </Form.Group>
-              <Button variant="primary" type="submit" disabled={!isFormFilled}>
+              <Button
+                className="custom-button"
+                type="submit"
+                disabled={!isFormFilled}
+              >
                 Login
               </Button>
             </Form>

@@ -99,6 +99,7 @@ const FeedbackTable = () => {
   return (
     <div className="p-4">
       <Form>
+        <h5>Rating</h5>
         {["1", "2", "3", "4", "5"].map((rating) => (
           <Form.Check
             key={rating}

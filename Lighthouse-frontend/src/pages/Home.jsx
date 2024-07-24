@@ -19,7 +19,7 @@ const Home = () => {
       }}
     >
       <MagicQuadrant />
-      <Button variant="primary" onClick={handleShow}>
+      <Button className="custom-button" onClick={handleShow}>
         View Score Calculation Methodology
       </Button>
       <ScoreMethodologyModal showModal={showModal} handleClose={handleClose} />

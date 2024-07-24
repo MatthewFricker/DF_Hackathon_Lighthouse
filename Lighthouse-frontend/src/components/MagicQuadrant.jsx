@@ -75,8 +75,8 @@ const MagicQuadrant = () => {
     fetchData();
   }, []);
 
-  const handleValueTypeChange = (event) => setValueType(event.target.value);
-  const handleIndustryChange = (event) => setIndustry(event.target.value);
+  const handleValueTypeChange = (value) => setValueType(value);
+  const handleIndustryChange = (value) => setIndustry(value);
 
   const isAdmin = user?.role === "admin";
 

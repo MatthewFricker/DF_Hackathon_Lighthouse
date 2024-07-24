@@ -52,7 +52,7 @@ const ScoreMethodologyModal = ({ showModal, handleClose }) => {
         </ul>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
+        <Button className="custom-button" onClick={handleClose}>
           Close
         </Button>
       </Modal.Footer>

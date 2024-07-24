@@ -61,31 +61,11 @@ function NavBar() {
   };
 
   return (
-    <Navbar className="bg-body-tertiary justify-content-between p-3">
-      <Navbar.Brand>Lighthouse</Navbar.Brand>
+    <Navbar className="bg-body-tertiary justify-content-between p-3 red">
+      <Navbar.Brand className="white">Lighthouse</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="me-auto">
-          <Nav.Link href="/">Home</Nav.Link>
-          <Nav.Link href="/catalog">Catalog</Nav.Link>
-          {user ? (
-            <>
-              <Nav.Link href="/feedback">Feedback</Nav.Link>
-              <Nav.Link onClick={handleLogout} href="/">
-                Logout
-              </Nav.Link>
-            </>
-          ) : (
-            <Nav.Link href="/login">Login</Nav.Link>
-          )}
-        </Nav>
-        {user?.role === "admin" && (
-          <Nav className="admin-tools">
-            <Nav.Link href="/addLLM">Add LLM</Nav.Link>
-            <Nav.Link href="/viewFeedback">View Feedback</Nav.Link>
-          </Nav>
-        )}
-        <Form onSubmit={(e) => e.preventDefault()} className="d-flex ms-3">
+        <Form onSubmit={(e) => e.preventDefault()} className="d-flex me-auto">
           <Form.Control
             type="text"
             placeholder="Search"
@@ -95,7 +75,7 @@ function NavBar() {
           />
           {filteredData.length > 0 && (
             <Dropdown>
-              <Dropdown.Toggle variant="success" id="dropdown-basic">
+              <Dropdown.Toggle variant="secondary" id="dropdown-basic">
                 Search Results
               </Dropdown.Toggle>
               <Dropdown.Menu>
@@ -113,6 +93,38 @@ function NavBar() {
             </Dropdown>
           )}
         </Form>
+        <Nav className="ms-auto">
+          <Nav.Link href="/" className="white">
+            Home
+          </Nav.Link>
+          <Nav.Link href="/catalog" className="white">
+            Catalog
+          </Nav.Link>
+          {user ? (
+            <>
+              <Nav.Link href="/feedback" className="white">
+                Feedback
+              </Nav.Link>
+              <Nav.Link onClick={handleLogout} href="/" className="white">
+                Logout
+              </Nav.Link>
+            </>
+          ) : (
+            <Nav.Link href="/login" className="white">
+              Login
+            </Nav.Link>
+          )}
+        </Nav>
+        {user?.role === "admin" && (
+          <Nav className="admin-tools ms-3">
+            <Nav.Link href="/addLLM" className="white">
+              Add LLM
+            </Nav.Link>
+            <Nav.Link href="/viewFeedback" className="white">
+              View Feedback
+            </Nav.Link>
+          </Nav>
+        )}
       </Navbar.Collapse>
     </Navbar>
   );

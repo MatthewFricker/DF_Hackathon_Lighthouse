@@ -171,7 +171,7 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
     };
   };
 
-  svg
+  const points = svg
     .selectAll("circle")
     .data(data)
     .enter()
@@ -207,6 +207,24 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
     .on("click", function (event, d) {
       window.location.href = `/model/${d.name}`;
     });
+
+  svg
+    .selectAll("text.label")
+    .data(data)
+    .enter()
+    .append("text")
+    .attr("class", "label")
+    .attr(
+      "x",
+      (d) => xScale(calculateValues(d, valueType).businessReadiness) + 5
+    )
+    .attr(
+      "y",
+      (d) => yScale(calculateValues(d, valueType).perceivedBusinessValue) - 5
+    )
+    .text((d) => d.name)
+    .attr("font-size", "10px")
+    .attr("fill", "#333");
 
   const tooltip = d3
     .select("body")
