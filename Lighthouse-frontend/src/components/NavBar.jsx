@@ -30,21 +30,14 @@ function NavBar() {
     if (searchQuery) {
       const lowerCaseQuery = searchQuery.toLowerCase();
 
-      const uniqueMatches = new Map();
-      data.forEach((item) => {
-        let matchSource = null;
-        if (item.name.toLowerCase().includes(lowerCaseQuery)) {
-          matchSource = "name";
-        } else if (item.organization.toLowerCase().includes(lowerCaseQuery)) {
-          matchSource = "organization";
-        }
+      // Filter items based on the search query
+      const filtered = data.filter(
+        (item) =>
+          item.name.toLowerCase().includes(lowerCaseQuery) ||
+          item.organization.toLowerCase().includes(lowerCaseQuery)
+      );
 
-        if (matchSource && !uniqueMatches.has(item.id)) {
-          uniqueMatches.set(item.id, { ...item, matchSource });
-        }
-      });
-
-      setFilteredData(Array.from(uniqueMatches.values()));
+      setFilteredData(filtered);
     } else {
       setFilteredData([]);
     }
@@ -74,7 +67,7 @@ function NavBar() {
             className="me-2"
           />
           {filteredData.length > 0 && (
-            <Dropdown>
+            <Dropdown className="search-dropdown">
               <Dropdown.Toggle variant="secondary" id="dropdown-basic">
                 Search Results
               </Dropdown.Toggle>
@@ -84,9 +77,7 @@ function NavBar() {
                     key={item.id}
                     onClick={() => handleSelect(item)}
                   >
-                    {item.matchSource === "organization"
-                      ? item.organization
-                      : item.name}
+                    {item.name} - {item.organization}
                   </Dropdown.Item>
                 ))}
               </Dropdown.Menu>
