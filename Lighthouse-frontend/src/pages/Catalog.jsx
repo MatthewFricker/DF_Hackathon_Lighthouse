@@ -12,6 +12,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { getModels } from "../services/LLM.service.js";
 // import { FaArrowRight } from "react-icons/fa";
+import "./Catalog.css"; 
 
 const Catalog = () => {
   const [data, setData] = useState([]);
@@ -233,17 +234,23 @@ const Catalog = () => {
             <Table striped bordered hover>
               <thead>
                 <tr>
-                  <th onClick={() => requestSort("name")}>
+                  <th onClick={() => requestSort("name")} className="clickable">
                     Name {getClassNamesFor("name") === "ascending" ? "▲" : "▼"}
                   </th>
-                  <th onClick={() => requestSort("organization")}>
+                  <th
+                    onClick={() => requestSort("organization")}
+                    className="clickable"
+                  >
                     Organization{" "}
                     {getClassNamesFor("organization") === "ascending"
                       ? "▲"
                       : "▼"}
                   </th>
                   <th>Description</th>
-                  <th onClick={() => requestSort("created_date")}>
+                  <th
+                    onClick={() => requestSort("created_date")}
+                    className="clickable"
+                  >
                     Created Date{" "}
                     {getClassNamesFor("created_date") === "ascending"
                       ? "▲"

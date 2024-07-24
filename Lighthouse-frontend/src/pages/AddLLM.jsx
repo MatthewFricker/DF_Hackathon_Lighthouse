@@ -633,19 +633,6 @@ const AddLLM = () => {
                 <Card.Body>
                   <Row className="mb-3">
                     <Col md={4} className="d-flex align-items-center">
-                      <Form.Label className="fw-bold mb-0">Lawsuits</Form.Label>
-                    </Col>
-                    <Col md={8}>
-                      <Form.Control
-                        type="number"
-                        name="lawsuits"
-                        value={formData.lawsuits}
-                        onChange={handleChange}
-                      />
-                    </Col>
-                  </Row>
-                  <Row className="mb-3">
-                    <Col md={4} className="d-flex align-items-center">
                       <Form.Label className="fw-bold mb-0">Size</Form.Label>
                     </Col>
                     <Col md={8}>
@@ -883,6 +870,19 @@ const AddLLM = () => {
                         type="text"
                         name="failures"
                         value={formData.failures}
+                        onChange={handleChange}
+                      />
+                    </Col>
+                  </Row>
+                  <Row className="mb-3">
+                    <Col md={4} className="d-flex align-items-center">
+                      <Form.Label className="fw-bold mb-0">Lawsuits</Form.Label>
+                    </Col>
+                    <Col md={8}>
+                      <Form.Control
+                        type="number"
+                        name="lawsuits"
+                        value={formData.lawsuits}
                         onChange={handleChange}
                       />
                     </Col>
