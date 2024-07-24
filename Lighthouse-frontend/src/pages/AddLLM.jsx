@@ -51,27 +51,62 @@ const AddLLM = () => {
     failures: "",
     lawsuits: 0,
     lawsuit_inf: "",
-    credibility: 0,
+    org_credibility: 0,
     safety: 0,
-    benchmarks: 0,
+    performance: 0,
     business_readiness_general: 0,
     business_readiness_personal: 0,
     capabilities: 0,
-    success_stories: 0,
+    known_successes: 0,
     popularity: 0,
     perceived_business_value_general: 0,
     perceived_business_value_personal: 0,
-    use_cases_industries: "",
   });
 
   const navigate = useNavigate();
 
+  const calculateBusinessReadiness = (capabilities, safety, performance) => {
+    return (0.4 * capabilities + 0.35 * safety + 0.25 * performance).toFixed(2);
+  };
+
+  const calculatePerceivedBusinessValue = (
+    org_credibility,
+    known_successes,
+    popularity
+  ) => {
+    return (
+      0.4 * org_credibility +
+      0.4 * known_successes +
+      0.2 * popularity
+    ).toFixed(2);
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
+    const newValue = value !== "" ? parseFloat(value) : 0;
+    const updatedFormData = {
       ...formData,
       [name]: value,
-    });
+    };
+
+    if (["capabilities", "safety", "performance"].includes(name)) {
+      updatedFormData.business_readiness_general = calculateBusinessReadiness(
+        parseFloat(updatedFormData.capabilities),
+        parseFloat(updatedFormData.safety),
+        parseFloat(updatedFormData.performance)
+      );
+    }
+
+    if (["org_credibility", "known_successes", "popularity"].includes(name)) {
+      updatedFormData.perceived_business_value_general =
+        calculatePerceivedBusinessValue(
+          parseFloat(updatedFormData.org_credibility),
+          parseFloat(updatedFormData.known_successes),
+          parseFloat(updatedFormData.popularity)
+        );
+    }
+
+    setFormData(updatedFormData);
   };
 
   const handleDateChange = (date) => {
@@ -90,7 +125,7 @@ const AddLLM = () => {
 
   const handleModalityChange = (e) => {
     const { name, checked } = e.target;
-    const modalities = (formData.modality || "").split(", ");
+    const modalities = formData.modality ? formData.modality.split(", ") : [];
 
     if (checked) {
       if (!modalities.includes(name)) {
@@ -120,9 +155,9 @@ const AddLLM = () => {
 
   const handleUseCasesIndustriesChange = (e) => {
     const { name, checked } = e.target;
-    const useCasesIndustries = (formData.use_cases_industries || "").split(
-      ", "
-    );
+    const useCasesIndustries = formData.use_cases_industries
+      ? formData.use_cases_industries.split(", ")
+      : [];
 
     if (checked) {
       if (!useCasesIndustries.includes(name)) {
@@ -302,9 +337,13 @@ const AddLLM = () => {
                             type="checkbox"
                             label="Image"
                             name="image"
-                            checked={formData.modality
-                              .split(", ")
-                              .includes("image")}
+                            checked={
+                              formData.modality
+                                ? formData.modality
+                                    .split(", ")
+                                    .includes("image")
+                                : false
+                            }
                             onChange={handleModalityChange}
                           />
                           <Form.Check
@@ -312,9 +351,13 @@ const AddLLM = () => {
                             type="checkbox"
                             label="Text;Image"
                             name="textImage"
-                            checked={formData.modality
-                              .split(", ")
-                              .includes("textImage")}
+                            checked={
+                              formData.modality
+                                ? formData.modality
+                                    .split(", ")
+                                    .includes("textImage")
+                                : false
+                            }
                             onChange={handleModalityChange}
                           />
                           <Form.Check
@@ -322,9 +365,11 @@ const AddLLM = () => {
                             type="checkbox"
                             label="Text"
                             name="text"
-                            checked={formData.modality
-                              .split(", ")
-                              .includes("text")}
+                            checked={
+                              formData.modality
+                                ? formData.modality.split(", ").includes("text")
+                                : false
+                            }
                             onChange={handleModalityChange}
                           />
                           <Form.Check
@@ -332,9 +377,13 @@ const AddLLM = () => {
                             type="checkbox"
                             label="Text;Video"
                             name="textVideo"
-                            checked={formData.modality
-                              .split(", ")
-                              .includes("textVideo")}
+                            checked={
+                              formData.modality
+                                ? formData.modality
+                                    .split(", ")
+                                    .includes("textVideo")
+                                : false
+                            }
                             onChange={handleModalityChange}
                           />
                         </div>
@@ -355,9 +404,13 @@ const AddLLM = () => {
                             type="checkbox"
                             label="Finance"
                             name="Finance"
-                            checked={formData.use_cases_industries
-                              .split(", ")
-                              .includes("Finance")}
+                            checked={
+                              formData.use_cases_industries
+                                ? formData.use_cases_industries
+                                    .split(", ")
+                                    .includes("Finance")
+                                : false
+                            }
                             onChange={handleUseCasesIndustriesChange}
                           />
                           <Form.Check
@@ -365,9 +418,13 @@ const AddLLM = () => {
                             type="checkbox"
                             label="Education"
                             name="Education"
-                            checked={formData.use_cases_industries
-                              .split(", ")
-                              .includes("Education")}
+                            checked={
+                              formData.use_cases_industries
+                                ? formData.use_cases_industries
+                                    .split(", ")
+                                    .includes("Education")
+                                : false
+                            }
                             onChange={handleUseCasesIndustriesChange}
                           />
                           <Form.Check
@@ -375,9 +432,13 @@ const AddLLM = () => {
                             type="checkbox"
                             label="Customer Support"
                             name="Customer Support"
-                            checked={formData.use_cases_industries
-                              .split(", ")
-                              .includes("Customer Support")}
+                            checked={
+                              formData.use_cases_industries
+                                ? formData.use_cases_industries
+                                    .split(", ")
+                                    .includes("Customer Support")
+                                : false
+                            }
                             onChange={handleUseCasesIndustriesChange}
                           />
                           <Form.Check
@@ -385,9 +446,13 @@ const AddLLM = () => {
                             type="checkbox"
                             label="Marketing"
                             name="Marketing"
-                            checked={formData.use_cases_industries
-                              .split(", ")
-                              .includes("Marketing")}
+                            checked={
+                              formData.use_cases_industries
+                                ? formData.use_cases_industries
+                                    .split(", ")
+                                    .includes("Marketing")
+                                : false
+                            }
                             onChange={handleUseCasesIndustriesChange}
                           />
                           <Form.Check
@@ -395,9 +460,13 @@ const AddLLM = () => {
                             type="checkbox"
                             label="Pharmaceuticals"
                             name="Pharmaceuticals"
-                            checked={formData.use_cases_industries
-                              .split(", ")
-                              .includes("Pharmaceuticals")}
+                            checked={
+                              formData.use_cases_industries
+                                ? formData.use_cases_industries
+                                    .split(", ")
+                                    .includes("Pharmaceuticals")
+                                : false
+                            }
                             onChange={handleUseCasesIndustriesChange}
                           />
                           <Form.Check
@@ -405,9 +474,13 @@ const AddLLM = () => {
                             type="checkbox"
                             label="Technology"
                             name="Technology"
-                            checked={formData.use_cases_industries
-                              .split(", ")
-                              .includes("Technology")}
+                            checked={
+                              formData.use_cases_industries
+                                ? formData.use_cases_industries
+                                    .split(", ")
+                                    .includes("Technology")
+                                : false
+                            }
                             onChange={handleUseCasesIndustriesChange}
                           />
                           <Form.Check
@@ -415,9 +488,13 @@ const AddLLM = () => {
                             type="checkbox"
                             label="Healthcare"
                             name="Healthcare"
-                            checked={formData.use_cases_industries
-                              .split(", ")
-                              .includes("Healthcare")}
+                            checked={
+                              formData.use_cases_industries
+                                ? formData.use_cases_industries
+                                    .split(", ")
+                                    .includes("Healthcare")
+                                : false
+                            }
                             onChange={handleUseCasesIndustriesChange}
                           />
                           <Form.Check
@@ -425,85 +502,19 @@ const AddLLM = () => {
                             type="checkbox"
                             label="Legal"
                             name="Legal"
-                            checked={formData.use_cases_industries
-                              .split(", ")
-                              .includes("Legal")}
+                            checked={
+                              formData.use_cases_industries
+                                ? formData.use_cases_industries
+                                    .split(", ")
+                                    .includes("Legal")
+                                : false
+                            }
                             onChange={handleUseCasesIndustriesChange}
                           />
                         </div>
                       </Col>
                     </Row>
                   </Form.Group>
-                  {/* <Row className="mb-3">
-                    <Col md={6}>
-                      <Row className="mb-3">
-                        <Col md={6} className="d-flex align-items-center">
-                          <Form.Label className="fw-bold mb-0">
-                            Business Readiness (General)
-                          </Form.Label>
-                        </Col>
-                        <Col md={6}>
-                          <Form.Control
-                            type="number"
-                            name="business_readiness_general"
-                            value={formData.business_readiness_general}
-                            onChange={handleChange}
-                            required
-                          />
-                        </Col>
-                      </Row>
-                      <Row className="mb-3">
-                        <Col md={6} className="d-flex align-items-center">
-                          <Form.Label className="fw-bold mb-0">
-                            Perceived Business Value (General)
-                          </Form.Label>
-                        </Col>
-                        <Col md={6}>
-                          <Form.Control
-                            type="number"
-                            name="perceived_business_value_general"
-                            value={formData.perceived_business_value_general}
-                            onChange={handleChange}
-                            required
-                          />
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col md={6}>
-                      <Row className="mb-3">
-                        <Col md={6} className="d-flex align-items-center">
-                          <Form.Label className="fw-bold mb-0">
-                            Business Readiness (Personal)
-                          </Form.Label>
-                        </Col>
-                        <Col md={6}>
-                          <Form.Control
-                            type="number"
-                            name="business_readiness_personal"
-                            value={formData.business_readiness_personal}
-                            onChange={handleChange}
-                            required
-                          />
-                        </Col>
-                      </Row>
-                      <Row className="mb-3">
-                        <Col md={6} className="d-flex align-items-center">
-                          <Form.Label className="fw-bold mb-0">
-                            Perceived Business Value (Personal)
-                          </Form.Label>
-                        </Col>
-                        <Col md={6}>
-                          <Form.Control
-                            type="number"
-                            name="perceived_business_value_personal"
-                            value={formData.perceived_business_value_personal}
-                            onChange={handleChange}
-                            required
-                          />
-                        </Col>
-                      </Row>
-                    </Col>
-                  </Row> */}
                 </Card.Body>
               </Card>
 
@@ -516,14 +527,14 @@ const AddLLM = () => {
                       <Row className="mb-3">
                         <Col md={6} className="d-flex align-items-center">
                           <Form.Label className="fw-bold mb-0">
-                            Benchmarks
+                            Performance
                           </Form.Label>
                         </Col>
                         <Col md={6}>
                           <Form.Control
                             type="number"
-                            name="benchmarks"
-                            value={formData.benchmarks}
+                            name="performance"
+                            value={formData.performance}
                             onChange={handleChange}
                           />
                         </Col>
@@ -546,14 +557,14 @@ const AddLLM = () => {
                       <Row className="mb-3">
                         <Col md={6} className="d-flex align-items-center">
                           <Form.Label className="fw-bold mb-0">
-                            Credibility
+                            Capabilities
                           </Form.Label>
                         </Col>
                         <Col md={6}>
                           <Form.Control
                             type="number"
-                            name="credibility"
-                            value={formData.credibility}
+                            name="capabilities"
+                            value={formData.capabilities}
                             onChange={handleChange}
                           />
                         </Col>
@@ -578,14 +589,14 @@ const AddLLM = () => {
                       <Row className="mb-3">
                         <Col md={6} className="d-flex align-items-center">
                           <Form.Label className="fw-bold mb-0">
-                            Success Stories
+                            Known Successes
                           </Form.Label>
                         </Col>
                         <Col md={6}>
                           <Form.Control
                             type="number"
-                            name="success_stories"
-                            value={formData.success_stories}
+                            name="known_successes"
+                            value={formData.known_successes}
                             onChange={handleChange}
                           />
                         </Col>
@@ -593,14 +604,14 @@ const AddLLM = () => {
                       <Row className="mb-3">
                         <Col md={6} className="d-flex align-items-center">
                           <Form.Label className="fw-bold mb-0">
-                            Capabilities
+                            Org Credibility
                           </Form.Label>
                         </Col>
                         <Col md={6}>
                           <Form.Control
                             type="number"
-                            name="capabilities"
-                            value={formData.capabilities}
+                            name="org_credibility"
+                            value={formData.org_credibility}
                             onChange={handleChange}
                           />
                         </Col>
