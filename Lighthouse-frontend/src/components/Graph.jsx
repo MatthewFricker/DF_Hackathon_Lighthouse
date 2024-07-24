@@ -193,7 +193,7 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
       yScale(calculateValues(d, valueType).perceivedBusinessValue)
     )
     .attr("r", 5)
-    .attr("fill", "red")
+    .attr("fill", "blue")
     .style("cursor", "pointer")
     .on("mouseover", function (event, d) {
       d3.select(this).transition().attr("r", 7).attr("fill", "orange");
