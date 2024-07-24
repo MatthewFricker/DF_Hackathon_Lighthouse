@@ -58,7 +58,12 @@ const LeaveFeedback = () => {
         <Row className="justify-content-md-center">
           <Col md={6}>
             <Card>
-              <Card.Header as="h3">Leave Feedback</Card.Header>
+              <Card.Header
+                as="h3"
+                style={{ backgroundColor: "#CD6675" }}
+              >
+                Leave Feedback
+              </Card.Header>
               <Card.Body>
                 <Form onSubmit={handleSubmit}>
                   <Form.Group controlId="formRating" className="mb-3">

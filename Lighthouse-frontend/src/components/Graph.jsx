@@ -1,176 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import * as d3 from "d3";
-import "./GartnerMagicQuadrant.css";
-import { getModels } from "../services/LLM.service.js";
-import { Container, Row, Col, Form, Spinner, Button } from "react-bootstrap";
-import AdminModal from "./AdminModal";
-import { useUser } from "../services/UserContext";
+import "./Graph.css";
 
-
-const defaultModifiers = {
-  default: {
-    businessReadiness: { capability: 1.0, safety: 1.0, performance: 1.0 },
-    perceivedBusinessValue: {
-      orgCred: 1.0,
-      knownSuccess: 1.0,
-      popularity: 1.0,
-    },
-  },
-  banking: {
-    businessReadiness: { capability: 0.7, safety: 1.8, performance: 0.9 },
-    perceivedBusinessValue: {
-      orgCred: 1.2,
-      knownSuccess: 1.0,
-      popularity: 0.8,
-    },
-  },
-  healthcare: {
-    businessReadiness: { capability: 0.6, safety: 2.2, performance: 0.7 },
-    perceivedBusinessValue: {
-      orgCred: 1.3,
-      knownSuccess: 1.1,
-      popularity: 0.6,
-    },
-  },
-  legal: {
-    businessReadiness: { capability: 0.5, safety: 2.5, performance: 0.6 },
-    perceivedBusinessValue: {
-      orgCred: 1.1,
-      knownSuccess: 0.9,
-      popularity: 0.5,
-    },
-  },
-  telecommunication: {
-    businessReadiness: { capability: 1.1, safety: 1.0, performance: 1.2 },
-    perceivedBusinessValue: {
-      orgCred: 1.0,
-      knownSuccess: 1.1,
-      popularity: 1.0,
-    },
-  },
-};
-
-const GartnerMagicQuadrant = () => {
-  const { user } = useUser();
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [valueType, setValueType] = useState("general");
-  const [industry, setIndustry] = useState("default");
-  const [modifiers, setModifiers] = useState(() => {
-    const savedModifiers = localStorage.getItem("industryModifiers");
-    return savedModifiers ? JSON.parse(savedModifiers) : defaultModifiers;
-  });
-  const [showModal, setShowModal] = useState(false);
-
-  console.log(user);
-
+const Graph = ({ data, valueType, industry, modifiers }) => {
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getModels();
-        setData(response);
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    if (data) {
-      CreateGraph(data, valueType, industry, modifiers);
-    }
+    CreateGraph(data, valueType, industry, modifiers);
   }, [data, valueType, industry, modifiers]);
 
-  const handleValueTypeChange = (event) => {
-    setValueType(event.target.value);
-  };
-
-  const handleIndustryChange = (event) => {
-    setIndustry(event.target.value);
-  };
-
-  const isAdmin = user?.role === "admin";
-
-  const handleShowModal = () => setShowModal(true);
-  const handleCloseModal = () => setShowModal(false);
-
-  if (loading) {
-    return (
-      <Container className="text-center mt-5">
-        <Spinner animation="border" role="status">
-          <span className="sr-only">Loading...</span>
-        </Spinner>
-      </Container>
-    );
-  }
-
-  if (!data) {
-    return (
-      <Container className="text-center mt-5">No data available</Container>
-    );
-  }
-
-  return (
-    <Container>
-      <Row className="mb-4">
-        <Col>
-          <h2>Lighthouse Magic Quadrant</h2>
-        </Col>
-      </Row>
-      <Row className="mb-3">
-        <Col md={6}>
-          <Form.Group controlId="valueType">
-            <Form.Label>Select Use Type:</Form.Label>
-            <Form.Control
-              as="select"
-              value={valueType}
-              onChange={handleValueTypeChange}
-            >
-              <option value="general">Business</option>
-              <option value="personal">Employee</option>
-            </Form.Control>
-          </Form.Group>
-        </Col>
-        <Col md={6}>
-          <Form.Group controlId="industry">
-            <Form.Label>Select Industry:</Form.Label>
-            <Form.Control
-              as="select"
-              value={industry}
-              onChange={handleIndustryChange}
-            >
-              <option value="default">Default</option>
-              <option value="banking">Banking</option>
-              <option value="healthcare">Healthcare</option>
-              <option value="legal">Legal</option>
-              <option value="telecommunication">Telecommunication</option>
-            </Form.Control>
-          </Form.Group>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <div id="magic-quadrant"></div>
-        </Col>
-      </Row>
-      {isAdmin && (
-        <>
-          <Button variant="primary" onClick={handleShowModal}>
-            Open Admin Panel
-          </Button>
-          <AdminModal
-            show={showModal}
-            handleClose={handleCloseModal}
-            modifiers={modifiers}
-            setModifiers={setModifiers}
-          />
-        </>
-      )}
-    </Container>
-  );
+  return <div id="magic-quadrant"></div>;
 };
 
 const CreateGraph = (data, valueType, industry, modifiers) => {
@@ -178,7 +15,6 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
   const height = 600;
   const margin = { top: 50, right: 50, bottom: 50, left: 50 };
 
-  // Clear previous SVG content
   d3.select("#magic-quadrant").selectAll("*").remove();
 
   const svg = d3
@@ -192,7 +28,6 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
   const xScale = d3.scaleLinear().domain([0, 10]).range([0, width]);
   const yScale = d3.scaleLinear().domain([0, 10]).range([height, 0]);
 
-  // Add background rectangles for quadrants
   svg
     .append("rect")
     .attr("x", width / 2)
@@ -229,7 +64,6 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
     .attr("fill", "lightcoral")
     .attr("opacity", 0.3);
 
-  // Add X and Y axes
   svg
     .append("g")
     .attr("transform", `translate(0,${height})`)
@@ -237,7 +71,6 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
 
   svg.append("g").call(d3.axisLeft(yScale));
 
-  // Add X axis label
   svg
     .append("text")
     .attr("x", width / 2)
@@ -247,7 +80,6 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
     .attr("fill", "#333")
     .text("Business Readiness");
 
-  // Add Y axis label
   svg
     .append("text")
     .attr("transform", "rotate(-90)")
@@ -258,7 +90,6 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
     .attr("fill", "#333")
     .text("Perceived Business Value");
 
-  // Add quadrant labels inside quadrants
   const addLabel = (x, y, text) => {
     const labelGroup = svg
       .append("g")
@@ -272,7 +103,6 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
       .attr("class", "quadrant-label")
       .text(text);
 
-    // Ensure textElement is created before accessing its bounding box
     if (textElement.node()) {
       const bbox = textElement.node().getBBox();
       labelGroup
@@ -294,7 +124,6 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
   addLabel(2.5, 0.5, "Niche Players");
   addLabel(7.5, 0.5, "Emerging Opportunities");
 
-  // Function to calculate business readiness and perceived business value
   const calculateValues = (d, valueType) => {
     let businessReadiness, perceivedBusinessValue;
 
@@ -342,8 +171,7 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
     };
   };
 
-  // Add points
-  svg
+  const points = svg
     .selectAll("circle")
     .data(data)
     .enter()
@@ -380,7 +208,6 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
       window.location.href = `/model/${d.name}`;
     });
 
-  // Add labels
   svg
     .selectAll("text.label")
     .data(data)
@@ -395,9 +222,10 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
       "y",
       (d) => yScale(calculateValues(d, valueType).perceivedBusinessValue) - 5
     )
-    .text((d) => d.name);
+    .text((d) => d.name)
+    .attr("font-size", "10px")
+    .attr("fill", "#333");
 
-  // Add tooltip
   const tooltip = d3
     .select("body")
     .append("div")
@@ -405,4 +233,4 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
     .style("opacity", 0);
 };
 
-export default GartnerMagicQuadrant;
+export default Graph;

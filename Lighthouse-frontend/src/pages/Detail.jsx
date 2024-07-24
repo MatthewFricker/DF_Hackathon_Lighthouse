@@ -82,8 +82,12 @@ const Detail = () => {
       <Container>
         <Row className="mt-5 justify-content-center">
           <Col>
-            <Card>
-              <Card.Header>{llm.name}</Card.Header>
+            <Card className="shadow-sm">
+              <Card.Header as="h3"
+                style={{ backgroundColor: "#CD6675"}}
+              >
+                {llm.name}
+              </Card.Header>
               <Card.Body>
                 <Card.Title>{llm.organization}</Card.Title>
                 <div className="d-flex justify-content-center">
@@ -94,7 +98,9 @@ const Detail = () => {
                           Business Readiness:{" "}
                           {llm.business_readiness_general.toFixed(2)}
                         </th>
-                        <th style={{ width: "50%" }}>
+                        <th
+                          style={{ width: "50%", backgroundColor: "#CD6675" }}
+                        >
                           Perceived Business Value:{" "}
                           {llm.perceived_business_value_general.toFixed(2)}
                         </th>
@@ -105,7 +111,9 @@ const Detail = () => {
                         <td style={{ width: "50%" }}>
                           Performance: {llm.performance.toFixed(2)}
                         </td>
-                        <td style={{ width: "50%" }}>
+                        <td
+                          style={{ width: "50%", backgroundColor: "#CD6675" }}
+                        >
                           Popularity: {llm.popularity.toFixed(2)}
                         </td>
                       </tr>
@@ -113,7 +121,9 @@ const Detail = () => {
                         <td style={{ width: "50%" }}>
                           Safety: {llm.safety.toFixed(2)}
                         </td>
-                        <td style={{ width: "50%" }}>
+                        <td
+                          style={{ width: "50%", backgroundColor: "#CD6675" }}
+                        >
                           Known Successes: {llm.known_successes.toFixed(2)}
                         </td>
                       </tr>
@@ -121,7 +131,9 @@ const Detail = () => {
                         <td style={{ width: "50%" }}>
                           Capabilities: {llm.capabilities.toFixed(2)}
                         </td>
-                        <td style={{ width: "50%" }}>
+                        <td
+                          style={{ width: "50%", backgroundColor: "#CD6675" }}
+                        >
                           Org Credibility: {llm.org_credibility.toFixed(2)}
                         </td>
                       </tr>
@@ -164,7 +176,7 @@ const Detail = () => {
                 {renderField("Lawsuit Information", llm.lawsuit_inf)}
 
                 <Link to="/catalog">
-                  <Button variant="primary" className="mt-3">
+                  <Button className="mt-3 custom-button">
                     Back to Catalog
                   </Button>
                 </Link>

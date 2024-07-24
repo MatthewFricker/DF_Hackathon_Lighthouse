@@ -1,3 +1,85 @@
 body {
   font-family: Roboto, Helvetica, Arial, sans-serif;
 }
+
+.red {
+  background-color: #A51C30 !important;
+}
+
+
+.red {
+  color: #A51C30 !important;
+}
+
+.pink {
+  color: #CD6675 !important;
+}
+
+.white {
+  color: #FFFFFF !important;
+}
+
+.black {
+  color : #242323 !important;
+}
+
+.gray {
+  color: #949eb0 !important;
+}
+
+.custom-toggle-button {
+  background-color: #CD6675;
+  border: none;
+  color: white;
+}
+
+.custom-toggle-button:hover,
+.custom-toggle-button:focus,
+.custom-toggle-button:active {
+  background-color: #A51C30 !important;
+  border: none;
+  color: white;
+}
+
+.custom-toggle-button.selected {
+  background-color: #A51C30;
+}
+
+.custom-toggle-button:not(.selected):hover {
+  background-color: #A51C30;
+}
+
+
+.custom-toggle-button {
+  background-color: #949EB0;
+  border: none;
+  color: white;
+}
+
+.custom-toggle-button.selected {
+  background-color: #CD6675 !important;
+}
+
+.custom-toggle-button:not(.selected):hover {
+  background-color: #7a8c9d !important;
+}
+
+.custom-button {
+  background-color: #CD6675 !important;
+  border: none;
+  color: white;
+}
+
+.custom-button:hover,
+.custom-button:focus,
+.custom-button:active {
+  background-color: #A51C30 !important;
+  border: none;
+  color: white;
+}
+
+.custom-button:disabled {
+  background-color: #949EB0 !important;
+  border: none;
+  color: white;
+}

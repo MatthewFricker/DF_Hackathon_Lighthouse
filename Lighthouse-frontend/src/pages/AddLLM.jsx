@@ -434,7 +434,7 @@ const AddLLM = () => {
                       </Col>
                     </Row>
                   </Form.Group>
-                  <Row className="mb-3">
+                  {/* <Row className="mb-3">
                     <Col md={6}>
                       <Row className="mb-3">
                         <Col md={6} className="d-flex align-items-center">
@@ -503,7 +503,7 @@ const AddLLM = () => {
                         </Col>
                       </Row>
                     </Col>
-                  </Row>
+                  </Row> */}
                 </Card.Body>
               </Card>
 
@@ -888,7 +888,7 @@ const AddLLM = () => {
                 </Card.Body>
               </Card>
 
-              <Button variant="primary" type="submit" className="mt-3">
+              <Button type="submit" className="mt-3 custom-button">
                 Submit
               </Button>
             </Form>

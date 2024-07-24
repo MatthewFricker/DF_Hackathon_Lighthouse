@@ -83,7 +83,11 @@ const Register = () => {
                 />
               </Form.Group>
 
-              <Button variant="primary" type="submit" disabled={!isFormFilled}>
+              <Button
+                className="custom-button"
+                type="submit"
+                disabled={!isFormFilled}
+              >
                 Register
               </Button>
             </Form>
