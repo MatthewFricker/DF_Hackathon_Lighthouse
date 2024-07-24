@@ -15,8 +15,10 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
   const height = 600;
   const margin = { top: 50, right: 50, bottom: 50, left: 50 };
 
+  // Clear any existing content in the div
   d3.select("#magic-quadrant").selectAll("*").remove();
 
+  // Create the SVG container
   const svg = d3
     .select("#magic-quadrant")
     .append("svg")
@@ -25,6 +27,7 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
     .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
+  // Define scales
   const xScale = d3.scaleLinear().domain([0, 10]).range([0, width]);
   const yScale = d3.scaleLinear().domain([0, 10]).range([height, 0]);
 
@@ -38,8 +41,8 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
     .attr("fill", "#333")
     .text("Perceived Business Value vs Business Readiness");
 
-  // Add the quadrant lines
-  // Add the quadrant lines
+  // Add the quadrant lines (background rectangles for each quadrant)
+
   svg
     .append("rect")
     .attr("x", width / 2)
@@ -55,7 +58,7 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
     .attr("y", 0)
     .attr("width", width / 2)
     .attr("height", height / 2)
-    .attr("fill", "#CD5C5C") // lighter red for contrast
+    .attr("fill", "#CD5C5C") // red
     .attr("opacity", 0.3);
 
   svg
@@ -64,7 +67,7 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
     .attr("y", height / 2)
     .attr("width", width / 2)
     .attr("height", height / 2)
-    .attr("fill", "#D3D3D3") // light gray
+    .attr("fill", "#D3D3D3") // grey
     .attr("opacity", 0.3);
 
   svg
@@ -73,9 +76,10 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
     .attr("y", height / 2)
     .attr("width", width / 2)
     .attr("height", height / 2)
-    .attr("fill", "#949eb0") // gray
+    .attr("fill", "#949eb0") // blue
     .attr("opacity", 0.3);
 
+  // Add X and Y axes
   svg
     .append("g")
     .attr("transform", `translate(0,${height})`)
@@ -83,6 +87,7 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
 
   svg.append("g").call(d3.axisLeft(yScale));
 
+  // Add the axis labels
   svg
     .append("text")
     .attr("x", width / 2)
@@ -102,6 +107,7 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
     .attr("fill", "#333")
     .text("Perceived Business Value");
 
+  // Add labels to each quadrant
   const addLabel = (x, y, text) => {
     const labelGroup = svg
       .append("g")
@@ -131,11 +137,13 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
     }
   };
 
+  
   addLabel(7.5, 9.5, "Leaders");
   addLabel(2.5, 9.5, "Respected");
   addLabel(2.5, 0.5, "Niche Players");
   addLabel(7.5, 0.5, "Emerging Opportunities");
 
+  // Calculate business readiness and perceived business value
   const calculateValues = (d, valueType) => {
     let businessReadiness, perceivedBusinessValue;
 
@@ -183,6 +191,7 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
     };
   };
 
+  // Add data points to the chart
   const points = svg
     .selectAll("circle")
     .data(data)
@@ -193,7 +202,7 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
       yScale(calculateValues(d, valueType).perceivedBusinessValue)
     )
     .attr("r", 5)
-    .attr("fill", "blue")
+    .attr("fill", "red")
     .style("cursor", "pointer")
     .on("mouseover", function (event, d) {
       d3.select(this).transition().attr("r", 7).attr("fill", "orange");
@@ -213,13 +222,14 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
         .style("top", event.pageY - 28 + "px");
     })
     .on("mouseout", function () {
-      d3.select(this).transition().attr("r", 5).attr("fill", "blue");
+      d3.select(this).transition().attr("r", 5).attr("fill", "red");
       tooltip.transition().style("opacity", 0);
     })
     .on("click", function (event, d) {
       window.location.href = `/model/${d.name}`;
     });
 
+  // Add labels to each data point
   svg
     .selectAll("text.label")
     .data(data)
@@ -238,6 +248,7 @@ const CreateGraph = (data, valueType, industry, modifiers) => {
     .attr("font-size", "10px")
     .attr("fill", "#333");
 
+  // Create a tooltip
   const tooltip = d3
     .select("body")
     .append("div")
