@@ -124,7 +124,7 @@ const MagicQuadrant = () => {
       </Row>
       {isAdmin && (
         <>
-          <Button variant="primary" onClick={handleShowModal}>
+          <Button className="custom-button" onClick={handleShowModal}>
             Open Admin Panel
           </Button>
           <AdminModal

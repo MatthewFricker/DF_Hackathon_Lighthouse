@@ -83,3 +83,7 @@ body {
   border: none;
   color: white;
 }
+
+.bg-filter {
+  background-color: #CD6675;
+}
