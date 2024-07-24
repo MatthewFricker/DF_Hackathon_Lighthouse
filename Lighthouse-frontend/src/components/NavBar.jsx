@@ -55,7 +55,7 @@ function NavBar() {
 
   return (
     <Navbar className="bg-body-tertiary justify-content-between p-3 red">
-      <Navbar.Brand className="white">Lighthouse</Navbar.Brand>
+      <Navbar.Brand className="white" href="/">Lighthouse</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Form onSubmit={(e) => e.preventDefault()} className="d-flex me-auto">
@@ -85,8 +85,8 @@ function NavBar() {
           )}
         </Form>
         <Nav className="ms-auto">
-          <Nav.Link href="/" className="white">
-            Home
+          <Nav.Link href="/matrix" className="white">
+            Matrix
           </Nav.Link>
           <Nav.Link href="/catalog" className="white">
             Catalog
