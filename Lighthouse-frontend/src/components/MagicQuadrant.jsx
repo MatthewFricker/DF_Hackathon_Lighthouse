@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Spinner, Button } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import { getModels } from "../services/LLM.service.js";
 import AdminModal from "./AdminModal";
 import { useUser } from "../services/UserContext";
@@ -79,11 +79,9 @@ const MagicQuadrant = ({ valueType, industry }) => {
 
   if (loading) {
     return (
-      <Container className="text-center mt-5">
-        <Spinner animation="border" role="status">
-          <span className="sr-only">Loading...</span>
-        </Spinner>
-      </Container>
+      <>
+        <img src="icons8-lighthouse.gif" alt="loading" />
+      </>
     );
   }
 
@@ -115,6 +113,7 @@ const MagicQuadrant = ({ valueType, industry }) => {
             handleClose={handleCloseModal}
             modifiers={modifiers}
             setModifiers={setModifiers}
+            defaultModifiers={defaultModifiers} 
           />
         </>
       )}

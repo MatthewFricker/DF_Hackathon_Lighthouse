@@ -9,7 +9,13 @@ import {
   Card,
 } from "react-bootstrap";
 
-const AdminModal = ({ show, handleClose, modifiers, setModifiers }) => {
+const AdminModal = ({
+  show,
+  handleClose,
+  modifiers,
+  setModifiers,
+  defaultModifiers,
+}) => {
   const [localModifiers, setLocalModifiers] = useState(modifiers);
 
   const handleInputChange = (industry, type, field, event) => {
@@ -33,6 +39,7 @@ const AdminModal = ({ show, handleClose, modifiers, setModifiers }) => {
   };
 
   const handleReset = () => {
+    localStorage.removeItem("industryModifiers");
     setLocalModifiers(defaultModifiers);
   };
 
