@@ -115,7 +115,7 @@ Subcategory scores are weighted differently according to the specified use case 
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/lighthouse-llm-catalog.git
+   git clone [https://github.com/yourusername/lighthouse-llm-catalog.git](https://github.com/MatthewFricker/DF_Hackathon_Lighthouse.git)
    cd lighthouse-llm-catalog
       ```
 
