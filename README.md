@@ -132,7 +132,7 @@ Subcategory scores are weighted differently according to the specified use case 
 
     - Create a `.env.dev` file in the `Lighthouse-backend` directory with the following:
 
-    ```env.dev
+    ```env
     PORT=your_port_number
     HOST=your_host
     DB_URI=your_mongodb_connection_string
