@@ -123,15 +123,15 @@ Subcategory scores are weighted differently according to the specified use case 
 
 3. Set up environment variables:
 
-    - Create a `.env` file in the `Lighthouse-frontend` directory with the following:
+    - Create a `.env.dev` file in the `Lighthouse-backend` directory with the following:
 
-    ```env
+    ```env.dev
     PORT=your_port_number
     HOST=your_host
     DB_URI=your_mongodb_connection_string
     JWT_SECRET=your_jwt_secret
     ```
-    - Create a `.env` file in the `client` directory with the following:
+    - Create a `.env` file in the `Lighthouse-frontend` directory with the following:
     ```env
     VITE_API_URL=your_api_url
     ```
@@ -140,9 +140,9 @@ Subcategory scores are weighted differently according to the specified use case 
 4. Start the development servers:
 
     ```sh
-    cd server
+    cd Lighthouse-backend
     npm run start
-    cd ../client
+    cd ../Lighthouse-frontend
     npm run dev
     ```
 
