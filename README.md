@@ -4,9 +4,9 @@ A 2 week Hackathon project with HorizonX and Digital Futures.
 
 ## Usage
 
-- **Front-end** Accessible at https://df-lighthouse.onrender.com/
+- **Front-end** -  Accessible at https://df-lighthouse.onrender.com/
 
-- **Back-end** Accessible at https://df-hackathon-lighthouse-service.onrender.com/
+- **Back-end** -  Accessible at https://df-hackathon-lighthouse-service.onrender.com/
 
 
 ## Table of Contents
