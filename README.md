@@ -115,8 +115,8 @@ Subcategory scores are weighted differently according to the specified use case 
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/yourusername/lighthouse-llm-catalog.git](https://github.com/MatthewFricker/DF_Hackathon_Lighthouse.git)
-   cd lighthouse-llm-catalog
+   git clone git@github.com:MatthewFricker/DF_Hackathon_Lighthouse.git
+   cd DF_Hackathon_Lighthouse
       ```
 
 2. Install dependencies for both client and server:
