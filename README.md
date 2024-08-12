@@ -2,9 +2,17 @@
 
 A 2 week Hackathon project with Digital Futures and HorizonX
 
+## Usage
+
+- **Front-end** Accessible at https://df-lighthouse.onrender.com/
+
+- **Back-end** Accessible at https://df-hackathon-lighthouse-service.onrender.com/
+
+
 ## Table of Contents
 
 - [Lighthouse: LLM Catalog Platform](#lighthouse-llm-catalog-platform)
+  - [Usage](#usage)
   - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
     - [Key Features](#key-features)
@@ -21,7 +29,6 @@ A 2 week Hackathon project with Digital Futures and HorizonX
     - [Employee Use:](#employee-use)
   - [Technology Stack](#technology-stack)
   - [Installation](#installation)
-  - [Usage](#usage)
   - [Contributors:](#contributors)
 
 ## Overview
@@ -145,14 +152,6 @@ Subcategory scores are weighted differently according to the specified use case 
     cd ../client
     npm run dev
     ```
-
-## Usage
-
-- **Front-end** Accessible at https://df-lighthouse.onrender.com/
-
-- **Back-end** Accessible at https://df-hackathon-lighthouse-service.onrender.com/
-
-
 
 ## Contributors: 
 
