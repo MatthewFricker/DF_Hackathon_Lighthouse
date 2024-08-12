@@ -1,6 +1,6 @@
 # Lighthouse: LLM Catalog Platform
 
-A 2 week Hackathon project with Digital Futures and HorizonX
+A 2 week Hackathon project with HorizonX and Digital Futures
 
 ## Usage
 
