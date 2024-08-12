@@ -63,10 +63,10 @@ A 2 week Hackathon project with HorizonX and Digital Futures.
 - **Design:** Clean, professional, and user-friendly.
 
 ### Additional Features
-- **User Feedback:** Registered users can leave feedback on LLMs.
+- **User Feedback:** Registered users can leave feedback.
 - **Admin Capabilities:**
   - Manage LLM entries and feedback.
-  - Modify industry selectors and matrix criteria via a UI.
+  - Modify matrix industry variables via a UI.
 
 ## Score Calculation Methodology
 
